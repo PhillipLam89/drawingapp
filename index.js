@@ -53,34 +53,72 @@ const downCBforRects = function(e) { //handles rects
 const downCBforPaths = function(e) {
    
     const mousePos = {
+        x: e.offsetX,
+        y: e.offsetY
+        }
+    currentShape = new Path(mousePos)
+    
+    const moveCallBack = function(e) {
+        const mousePos = {
+        x: e.offsetX,
+        y: e.offsetY
+        }
+        currentShape.addPoint(mousePos)
+    
+        clearAndRedrawCanvas()
+        drawProperShapes([...shapes, currentShape])
+    
+    }
+ 
+    const upCallBack = function(e) {
+        myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
+        myCanvas.onpointerup = 'die'
+    
+        shapes.push(currentShape)
+    }
+  myCanvas.onpointermove = moveCallBack
+  myCanvas.onpointerup = upCallBack
+  
+ }
+
+ const downCBforTriangles = function(e) { //handles equilateral triangles
+   
+    const type =
+    [...document.querySelectorAll('option')].find(attr => attr.selected).value
+    const mousePos = {
      x: e.offsetX,
      y: e.offsetY
     }
-   currentShape = new Path(mousePos)
+    currentShape = new Triangle(mousePos, type)
+
  
  const moveCallBack = function(e) {
      const mousePos = {
       x: e.offsetX,
       y: e.offsetY
      }
-    currentShape.addPoint(mousePos)
+    currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
     clearAndRedrawCanvas()
     drawProperShapes([...shapes, currentShape])
- 
   }
  
-  
   const upCallBack = function(e) {
      myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
      myCanvas.onpointerup = 'die'
   
+     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
+     // myCanvas.removeEventListener('pointerup', upCallBack)
+ 
      shapes.push(currentShape)
+  
   }
+ //  myCanvas.addEventListener('pointermove', moveCallBack)
+ //  myCanvas.addEventListener('pointerup', upCallBack)
   myCanvas.onpointermove = moveCallBack
   myCanvas.onpointerup = upCallBack
   
- }
+}
 
 
 myCanvas.onpointerdown = downCBforPaths
@@ -112,7 +150,9 @@ function drawProperShapes(shapes) {
 function changeTools(tool) {
     const shapeTypes = {
         path: downCBforPaths,
-        rect: downCBforRects
+        rect: downCBforRects,
+        equilateralTriangle:downCBforTriangles,
+        rightTriangle:downCBforTriangles
     }
     myCanvas.onpointerdown = shapeTypes[tool.value]
 }
