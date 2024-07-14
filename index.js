@@ -96,7 +96,6 @@ const downCBforPaths = function(e) {
 
 
 myCanvas.onpointerdown = downCBforPaths
-// myCanvas.onpointerdown = downCBforRects
 function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
     ctx.fillStyle = 'gray'
