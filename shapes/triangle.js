@@ -1,7 +1,7 @@
 class Triangle {
     constructor(corner1) {
         this.corner1 =  corner1
-        this.corner2 = corner1
+        this.corner2 = {}
     }
 
     setCorner2(corner2) {
@@ -16,7 +16,10 @@ class Triangle {
         ctx.moveTo(this.corner1.x, y)
         ctx.lineTo(this.corner2.x,y)
         const height = width * Math.cos(Math.PI / 6)
-        ctx.lineTo(this.corner1.x, y - height)
+        ctx.lineTo(minX + (width / 2)  , y - height )
+        ctx.lineTo(this.corner1.x   , y )
+        // ctx.moveTo(this.corner1.x,y)
+        // ctx.lineTo(this.corner1.x / 2  , y )
         ctx.stroke()
     }
 }
