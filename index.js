@@ -71,7 +71,7 @@ const downCBforPaths = function(e) {
     path.push(mousePos)
  
     clearAndRedrawCanvas()
-    drawShapes([...shapes, path])
+    drawProperShapes([...shapes, path])
  
   }
  
@@ -93,10 +93,10 @@ const downCBforPaths = function(e) {
   myCanvas.onpointerup = upCallBack
   
  }
- 
-myCanvas.onpointerdown = downCBforRects
-myCanvas.onpointerdown = downCBforPaths
 
+
+myCanvas.onpointerdown = downCBforPaths
+// myCanvas.onpointerdown = downCBforRects
 function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
     ctx.fillStyle = 'gray'
@@ -144,4 +144,11 @@ function drawProperShapes(shapes) {
 
  
     }
+}
+function changeTools(tool) {
+    const shapeTypes = {
+        path: downCBforPaths,
+        rect: downCBforRects
+    }
+    myCanvas.onpointerdown = shapeTypes[tool.value]
 }
