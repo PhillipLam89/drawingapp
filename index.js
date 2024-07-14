@@ -14,12 +14,14 @@ const shapes = []
 let currentShape = null
 
 const downCBforRects = function(e) { //handles rects
-   
+    const type =
+    [...document.querySelectorAll('option')]
+      .find(attr => attr.selected).value
     const mousePos = {
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Rect(mousePos)
+    currentShape = new Rect(mousePos, type)
 
  
  const moveCallBack = function(e) {
@@ -84,7 +86,8 @@ const downCBforPaths = function(e) {
  const downCBforTriangles = function(e) { //handles equilateral triangles
    
     const type =
-    [...document.querySelectorAll('option')].find(attr => attr.selected).value
+      [...document.querySelectorAll('option')]
+        .find(attr => attr.selected).value
     const mousePos = {
      x: e.offsetX,
      y: e.offsetY
@@ -121,7 +124,7 @@ const downCBforPaths = function(e) {
 }
 
 
-myCanvas.onpointerdown = downCBforPaths
+myCanvas.onpointerdown = downCBforPaths //default starting option
 
 
 function clearAndRedrawCanvas() {    
@@ -151,6 +154,7 @@ function changeTools(tool) {
     const shapeTypes = {
         path: downCBforPaths,
         rect: downCBforRects,
+        square:downCBforRects,
         equilateralTriangle:downCBforTriangles,
         rightTriangle:downCBforTriangles
     }
