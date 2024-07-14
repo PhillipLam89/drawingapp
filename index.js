@@ -16,11 +16,11 @@ let path = []
 
 myCanvas.onpointerdown = function(e) {
    
-   const mousePos = {
-    x: e.offsetX,
-    y: e.offsetY
-   }
-   path.push(mousePos)
+//    const mousePos = {
+//     x: e.offsetX,
+//     y: e.offsetY
+//    }
+//    path.push(mousePos)
 
 const moveCallBack = function(e) {
     const mousePos = {
@@ -28,30 +28,29 @@ const moveCallBack = function(e) {
      y: e.offsetY
     }
    path.push(mousePos)
+
+   clearAndRedrawCanvas()
+   for (const shape of [...shapes, path]) { 
+       ctx.beginPath()
+       ctx.moveTo(shape[0].x, shape[0].y)
+       
+       for(let i = 1; i < shape.length;i++) { //start at index 1 since we have initial positions of index 0 already
+           ctx.lineTo(shape[i].x, shape[i].y)
+       }       
+       ctx.stroke()
+   }
  }
 
  
  const upCallBack = function(e) {
-    myCanvas.onpointermove = null //notice using .on will not let you use removeEventListener but you can set its .on property to null
-    myCanvas.onpointerup = null
+    myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
+    myCanvas.onpointerup = 'die'
  
     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
     // myCanvas.removeEventListener('pointerup', upCallBack)
 
     shapes.push(path)
     path = []
-
-    clearAndRedrawCanvas()
-    for (const shape of shapes) {
-        ctx.beginPath()
-        ctx.moveTo(shape[0].x, shape[0].y)
-        
-        for(let i = 1; i < shape.length;i++) { //start at index 1 since we have initial positions of index 0 already
-            ctx.lineTo(shape[i].x, shape[i].y)
-        }       
-        ctx.stroke()
-    }
-
  }
 //  myCanvas.addEventListener('pointermove', moveCallBack)
 //  myCanvas.addEventListener('pointerup', upCallBack)
