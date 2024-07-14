@@ -1,0 +1,11 @@
+canvas {
+
+    border: 2px solid dodgerblue;
+
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
