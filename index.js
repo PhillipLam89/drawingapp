@@ -83,17 +83,19 @@ const downCBforPaths = function(e) {
 
  const downCBforTriangles = function(e) { //handles equilateral triangles
    
+    const type =
+    [...document.querySelectorAll('option')].find(attr => attr.selected).value
     const mousePos = {
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Triangle(mousePos)
+    currentShape = new Triangle(mousePos, type)
 
  
  const moveCallBack = function(e) {
      const mousePos = {
-      x: e.offsetX
-    
+      x: e.offsetX,
+      y: e.offsetY
      }
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
@@ -149,7 +151,8 @@ function changeTools(tool) {
     const shapeTypes = {
         path: downCBforPaths,
         rect: downCBforRects,
-        triangle:downCBforTriangles
+        equilateralTriangle:downCBforTriangles,
+        rightTriangle:downCBforTriangles
     }
     myCanvas.onpointerdown = shapeTypes[tool.value]
 }
