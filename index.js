@@ -11,11 +11,7 @@ const ctx = myCanvas.getContext('2d')
 clearAndRedrawCanvas()
 
 const shapes = []
-let path = []
-path.type = 'path' //bcuz arrays = objects
-let rectangle = {type:'rect'}
-
-
+let currentShape = null
 
 const downCBforRects = function(e) { //handles rects
    
@@ -23,20 +19,20 @@ const downCBforRects = function(e) { //handles rects
      x: e.offsetX,
      y: e.offsetY
     }
-    rectangle.corner1 = mousePos
+    currentShape = new Rect(mousePos)
+
  
  const moveCallBack = function(e) {
      const mousePos = {
       x: e.offsetX,
       y: e.offsetY
      }
-    rectangle.corner2 = mousePos //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
+    currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
     clearAndRedrawCanvas()
-    drawProperShapes([...shapes, rectangle])
+    drawProperShapes([...shapes, currentShape])
   }
  
-  
   const upCallBack = function(e) {
      myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
      myCanvas.onpointerup = 'die'
@@ -44,15 +40,14 @@ const downCBforRects = function(e) { //handles rects
      // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
      // myCanvas.removeEventListener('pointerup', upCallBack)
  
-     shapes.push(rectangle)
-     rectangle = {type:'rect'}
+     shapes.push(currentShape)
+  
   }
  //  myCanvas.addEventListener('pointermove', moveCallBack)
  //  myCanvas.addEventListener('pointerup', upCallBack)
   myCanvas.onpointermove = moveCallBack
   myCanvas.onpointerup = upCallBack
   
-
 }
 
 const downCBforPaths = function(e) {
@@ -61,17 +56,17 @@ const downCBforPaths = function(e) {
      x: e.offsetX,
      y: e.offsetY
     }
-    path.push(mousePos)
+   currentShape = new Path(mousePos)
  
  const moveCallBack = function(e) {
      const mousePos = {
       x: e.offsetX,
       y: e.offsetY
      }
-    path.push(mousePos)
+    currentShape.addPoint(mousePos)
  
     clearAndRedrawCanvas()
-    drawProperShapes([...shapes, path])
+    drawProperShapes([...shapes, currentShape])
  
   }
  
@@ -80,15 +75,8 @@ const downCBforPaths = function(e) {
      myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
      myCanvas.onpointerup = 'die'
   
-     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
-     // myCanvas.removeEventListener('pointerup', upCallBack)
- 
-     shapes.push(path)
-     path = []
-     path.type = 'path'
+     shapes.push(currentShape)
   }
- //  myCanvas.addEventListener('pointermove', moveCallBack)
- //  myCanvas.addEventListener('pointerup', upCallBack)
   myCanvas.onpointermove = moveCallBack
   myCanvas.onpointerup = upCallBack
   
@@ -96,6 +84,8 @@ const downCBforPaths = function(e) {
 
 
 myCanvas.onpointerdown = downCBforPaths
+
+
 function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
     ctx.fillStyle = 'gray'
@@ -116,32 +106,7 @@ function clearAndRedrawCanvas() {
 }
 function drawProperShapes(shapes) {
     for (const shape of shapes) { 
-        switch(shape.type) {
-            case "rect":
-                ctx.beginPath()
-                const minX = Math.min(shape.corner1.x, shape.corner2.x)
-                const minY = Math.min(shape.corner1.y, shape.corner2.y)
-                const width = Math.abs(shape.corner1.x - shape.corner2.x)
-                const height = Math.abs(shape.corner1.y - shape.corner2.y)
-                ctx.rect(minX,minY,width,height)
-                ctx.stroke()
-            break
-            case "path":
-                ctx.beginPath()
-                ctx.moveTo(shape[0].x, shape[0].y)
-                
-                for(let i = 1; i < shape.length;i++) { //start at index 1 since we have initial positions of index 0 already
-                    ctx.lineTo(shape[i].x, shape[i].y)
-                }       
-                ctx.stroke()
-            break;
-        }
-
-
-
- 
-
- 
+        shape.draw(ctx)
     }
 }
 function changeTools(tool) {
