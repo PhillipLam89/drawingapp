@@ -12,98 +12,90 @@ clearAndRedrawCanvas()
 
 const shapes = []
 let path = []
-let rectangle = {}
+path.type = 'path' //bcuz arrays = objects
+let rectangle = {type:'rect'}
 
-myCanvas.onpointerdown = function(e) {
+
+
+const downCBforRects = function(e) { //handles rects
    
-       const mousePos = {
-        x: e.offsetX,
-        y: e.offsetY
-       }
-       rectangle.corner1 = mousePos
-    
-    const moveCallBack = function(e) {
-        const mousePos = {
-         x: e.offsetX,
-         y: e.offsetY
-        }
-       rectangle.corner2 = mousePos //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
-    
-       clearAndRedrawCanvas()
-       for (const shape of [...shapes, rectangle]) { 
-           ctx.beginPath()
-           
-           const minX = Math.min(shape.corner1.x, shape.corner2.x)
-           const minY = Math.min(shape.corner1.y, shape.corner2.y)
-           const width = Math.abs(shape.corner1.x - shape.corner2.x)
-           const height = Math.abs(shape.corner1.y - shape.corner2.y)
-           ctx.rect(minX,minY,width,height)
-           ctx.stroke()
-       }
-     }
-    
-     
-     const upCallBack = function(e) {
-        myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
-        myCanvas.onpointerup = 'die'
-     
-        // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
-        // myCanvas.removeEventListener('pointerup', upCallBack)
-    
-        shapes.push(rectangle)
-        rectangle = {}
-     }
-    //  myCanvas.addEventListener('pointermove', moveCallBack)
-    //  myCanvas.addEventListener('pointerup', upCallBack)
-     myCanvas.onpointermove = moveCallBack
-     myCanvas.onpointerup = upCallBack
-     
+    const mousePos = {
+     x: e.offsetX,
+     y: e.offsetY
     }
+    rectangle.corner1 = mousePos
+ 
+ const moveCallBack = function(e) {
+     const mousePos = {
+      x: e.offsetX,
+      y: e.offsetY
+     }
+    rectangle.corner2 = mousePos //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
+ 
+    clearAndRedrawCanvas()
+    drawProperShapes([...shapes, rectangle])
+  }
+ 
+  
+  const upCallBack = function(e) {
+     myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
+     myCanvas.onpointerup = 'die'
+  
+     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
+     // myCanvas.removeEventListener('pointerup', upCallBack)
+ 
+     shapes.push(rectangle)
+     rectangle = {type:'rect'}
+  }
+ //  myCanvas.addEventListener('pointermove', moveCallBack)
+ //  myCanvas.addEventListener('pointerup', upCallBack)
+  myCanvas.onpointermove = moveCallBack
+  myCanvas.onpointerup = upCallBack
+  
 
-// myCanvas.onpointerdown = function(e) {
+}
+
+const downCBforPaths = function(e) {
    
-// //    const mousePos = {
-// //     x: e.offsetX,
-// //     y: e.offsetY
-// //    }
-// //    path.push(mousePos)
-
-// const moveCallBack = function(e) {
-//     const mousePos = {
-//      x: e.offsetX,
-//      y: e.offsetY
-//     }
-//    path.push(mousePos)
-
-//    clearAndRedrawCanvas()
-//    for (const shape of [...shapes, path]) { 
-//        ctx.beginPath()
-//        ctx.moveTo(shape[0].x, shape[0].y)
-       
-//        for(let i = 1; i < shape.length;i++) { //start at index 1 since we have initial positions of index 0 already
-//            ctx.lineTo(shape[i].x, shape[i].y)
-//        }       
-//        ctx.stroke()
-//    }
-//  }
-
+    const mousePos = {
+     x: e.offsetX,
+     y: e.offsetY
+    }
+    path.push(mousePos)
  
-//  const upCallBack = function(e) {
-//     myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
-//     myCanvas.onpointerup = 'die'
+ const moveCallBack = function(e) {
+     const mousePos = {
+      x: e.offsetX,
+      y: e.offsetY
+     }
+    path.push(mousePos)
  
-//     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
-//     // myCanvas.removeEventListener('pointerup', upCallBack)
-
-//     shapes.push(path)
-//     path = []
-//  }
-// //  myCanvas.addEventListener('pointermove', moveCallBack)
-// //  myCanvas.addEventListener('pointerup', upCallBack)
-//  myCanvas.onpointermove = moveCallBack
-//  myCanvas.onpointerup = upCallBack
+    clearAndRedrawCanvas()
+    drawShapes([...shapes, path])
  
-// }
+  }
+ 
+  
+  const upCallBack = function(e) {
+     myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
+     myCanvas.onpointerup = 'die'
+  
+     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
+     // myCanvas.removeEventListener('pointerup', upCallBack)
+ 
+     shapes.push(path)
+     path = []
+     path.type = 'path'
+  }
+ //  myCanvas.addEventListener('pointermove', moveCallBack)
+ //  myCanvas.addEventListener('pointerup', upCallBack)
+  myCanvas.onpointermove = moveCallBack
+  myCanvas.onpointerup = upCallBack
+  
+ }
+ 
+myCanvas.onpointerdown = downCBforRects
+myCanvas.onpointerdown = downCBforPaths
 
 function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
@@ -122,4 +114,34 @@ function clearAndRedrawCanvas() {
                 stageProperties.right, 
                 stageProperties.width, 
                 stageProperties.height)
+}
+function drawProperShapes(shapes) {
+    for (const shape of shapes) { 
+        switch(shape.type) {
+            case "rect":
+                ctx.beginPath()
+                const minX = Math.min(shape.corner1.x, shape.corner2.x)
+                const minY = Math.min(shape.corner1.y, shape.corner2.y)
+                const width = Math.abs(shape.corner1.x - shape.corner2.x)
+                const height = Math.abs(shape.corner1.y - shape.corner2.y)
+                ctx.rect(minX,minY,width,height)
+                ctx.stroke()
+            break
+            case "path":
+                ctx.beginPath()
+                ctx.moveTo(shape[0].x, shape[0].y)
+                
+                for(let i = 1; i < shape.length;i++) { //start at index 1 since we have initial positions of index 0 already
+                    ctx.lineTo(shape[i].x, shape[i].y)
+                }       
+                ctx.stroke()
+            break;
+        }
+
+
+
+ 
+
+ 
+    }
 }
