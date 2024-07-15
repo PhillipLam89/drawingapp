@@ -13,6 +13,43 @@ clearAndRedrawCanvas()
 const shapes = []
 let currentShape = null
 
+const downCBforCircles =  function(e) { 
+
+    const mousePos = {
+     x: e.offsetX,
+     y: e.offsetY
+    }
+    currentShape = new Circle(mousePos)
+
+ 
+ const moveCallBack = function(e) {
+     const mousePos = {
+      x: e.offsetX,
+      y: e.offsetY
+     }
+    currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
+ 
+    clearAndRedrawCanvas()
+    drawProperShapes([...shapes, currentShape])
+  }
+ 
+  const upCallBack = function(e) {
+     myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
+     myCanvas.onpointerup = 'die'
+  
+     // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
+     // myCanvas.removeEventListener('pointerup', upCallBack)
+ 
+     shapes.push(currentShape)
+  
+  }
+ //  myCanvas.addEventListener('pointermove', moveCallBack)
+ //  myCanvas.addEventListener('pointerup', upCallBack)
+  myCanvas.onpointermove = moveCallBack
+  myCanvas.onpointerup = upCallBack
+  
+}
+
 const downCBforRects = function(e) { //handles rects
     const type =
     [...document.querySelectorAll('option')]
@@ -153,6 +190,7 @@ function drawProperShapes(shapes) {
 function changeTools(tool) {
     const shapeTypes = {
         path: downCBforPaths,
+        circle: downCBforCircles,
         rect: downCBforRects,
         square:downCBforRects,
         equilateralTriangle:downCBforTriangles,
