@@ -7,6 +7,7 @@ class Path {
     }
     draw(ctx) {
         ctx.beginPath()
+        ctx.setLineDash([])
         ctx.moveTo(this.points[0].x, this.points[0].y)
         
         for(let i = 1; i < this.points.length;i++) { //start at index 1 since we have initial positions of index 0 already
