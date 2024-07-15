@@ -9,12 +9,12 @@ class Circle {
         this.corner2 = corner2
     }
     draw(ctx) {
-        const minX = Math.min(this.corner1.x, this.corner2.x)
+        const startX = this.corner1.x
         const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
-        const y = this.corner1.y
+        const startY = this.corner1.y
         ctx.beginPath()
                 //(x,y,radius,startAngle, endAngle)
-        ctx.arc(minX, y, rad, 0, 2 * Math.PI);
+        ctx.arc(startX, startY, rad, 0, 2 * Math.PI);
                     
         ctx.stroke()
     }
