@@ -1,5 +1,6 @@
-class Rect {
-    constructor(corner1, type) {
+class Rect extends Shape {
+    constructor(corner1, type,options) {
+        super(options)
         this.corner1 =  corner1
         this.corner2 = corner1
         this.type = type
@@ -10,6 +11,7 @@ class Rect {
     }
     draw(ctx) {
         ctx.beginPath()
+        ctx.strokeStyle = this.options.strokeColor
         const minX = Math.min(this.corner1.x, this.corner2.x)
         const minY = Math.min(this.corner1.y, this.corner2.y)
         const width = Math.abs(this.corner1.x - this.corner2.x)
@@ -17,6 +19,6 @@ class Rect {
                        width : Math.abs(this.corner1.y - this.corner2.y)
         ctx.rect(minX,minY,width, height)
                     
-        ctx.stroke()
+        super.handleOptions(ctx)
     }
 }

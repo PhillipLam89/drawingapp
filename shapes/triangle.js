@@ -1,5 +1,6 @@
-class Triangle {
-    constructor(corner1, type) {
+class Triangle extends Shape {
+    constructor(corner1, type, options) {
+        super(options)
         this.corner1 =  corner1
         this.corner2 = {}
         this.type = type
@@ -21,6 +22,6 @@ class Triangle {
                   newY < y ? (y - height) : (y+height) 
                   )
         ctx.lineTo(this.corner1.x , y )
-        ctx.stroke()
+        super.handleOptions(ctx)
     }
 }
