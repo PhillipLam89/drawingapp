@@ -1,10 +1,8 @@
 class Circle extends Shape {
     constructor(corner1,options) {
-        super()
+        super(options)
         this.corner1 =  corner1
-        this.corner2 = corner1
-        this.options = options
-     
+        this.corner2 = corner1   
     }
 
     setCorner2(corner2) {
@@ -18,8 +16,8 @@ class Circle extends Shape {
         ctx.beginPath()
         ctx.strokeStyle = this.options.strokeColor
                 //(x,y,radius,startAngle, endAngle)
-        ctx.arc(startX, startY, rad, 0, 2 * Math.PI);
-                    
-        ctx.stroke()
+        // ctx.arc(startX, startY, rad, Math.PI/2, 1.5* Math.PI,true);
+        ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);        
+        super.handleOptions(ctx)
     }
 }

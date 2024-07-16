@@ -20,10 +20,7 @@ const downCBforCircles =  function(e) {
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Circle(mousePos, {
-        fillColor: fillColor.value,
-        strokeColor: strokeColor.value
-    })
+    currentShape = new Circle(mousePos, getOptions())
 
  
  const moveCallBack = function(e) {
@@ -62,10 +59,7 @@ const downCBforRects = function(e) { //handles rects
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Rect(mousePos, type, {
-        fillColor: fillColor.value,
-        strokeColor: strokeColor.value
-    })
+    currentShape = new Rect(mousePos, type, getOptions())
 
 
  
@@ -104,10 +98,7 @@ const downCBforPaths = function(e) {
         y: e.offsetY
     }
 
-    currentShape = new Path(mousePos, {
-        fillColor: fillColor.value,
-        strokeColor: strokeColor.value
-    })
+    currentShape = new Path(mousePos, getOptions())
     
     const moveCallBack = function(e) {
         const mousePos = {
@@ -141,10 +132,7 @@ const downCBforPaths = function(e) {
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Triangle(mousePos, type, {
-        fillColor: fillColor.value,
-        strokeColor: strokeColor.value
-    })
+    currentShape = new Triangle(mousePos, type, getOptions())
 
  
  const moveCallBack = function(e) {
@@ -152,7 +140,7 @@ const downCBforPaths = function(e) {
       x: e.offsetX,
       y: e.offsetY
      }
-    currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
+    currentShape.setCorner2(mousePos) 
  
     clearAndRedrawCanvas()
     drawProperShapes([...shapes, currentShape])
@@ -183,7 +171,7 @@ function clearAndRedrawCanvas() {
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
     ctx.fillStyle = 'dodgerblue'
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
-    const scale = 1.3
+    const scale = 1.2
     const stageProperties = {
         width: 600 * scale,
         height: 480 * scale,
@@ -212,4 +200,12 @@ function changeTools(tool) {
         rightTriangle:downCBforTriangles
     }
     myCanvas.onpointerdown = shapeTypes[tool.value]
+}
+function getOptions() {
+    return {
+        fillColor: fillColor.value,
+        strokeColor: strokeColor.value,
+        fill: fill.checked,
+        stroke: stroke.checked
+    }
 }

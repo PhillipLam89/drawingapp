@@ -1,10 +1,9 @@
 class Rect extends Shape {
     constructor(corner1, type,options) {
-        super()
+        super(options)
         this.corner1 =  corner1
         this.corner2 = corner1
         this.type = type
-        this.options = options
     }
 
     setCorner2(corner2) {
@@ -20,6 +19,6 @@ class Rect extends Shape {
                        width : Math.abs(this.corner1.y - this.corner2.y)
         ctx.rect(minX,minY,width, height)
                     
-        ctx.stroke()
+        super.handleOptions(ctx)
     }
 }
