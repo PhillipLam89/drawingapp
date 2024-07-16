@@ -8,6 +8,7 @@ myCanvas.width = canvasProperties.width
 myCanvas.height = canvasProperties.height
 
 const ctx = myCanvas.getContext('2d')
+ctx.lineWidth = 5
 clearAndRedrawCanvas()
 
 const shapes = []
@@ -19,7 +20,10 @@ const downCBforCircles =  function(e) {
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Circle(mousePos)
+    currentShape = new Circle(mousePos, {
+        fillColor: fillColor.value,
+        strokeColor: strokeColor.value
+    })
 
  
  const moveCallBack = function(e) {
@@ -58,7 +62,11 @@ const downCBforRects = function(e) { //handles rects
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Rect(mousePos, type)
+    currentShape = new Rect(mousePos, type, {
+        fillColor: fillColor.value,
+        strokeColor: strokeColor.value
+    })
+
 
  
  const moveCallBack = function(e) {
@@ -94,8 +102,12 @@ const downCBforPaths = function(e) {
     const mousePos = {
         x: e.offsetX,
         y: e.offsetY
-        }
-    currentShape = new Path(mousePos)
+    }
+
+    currentShape = new Path(mousePos, {
+        fillColor: fillColor.value,
+        strokeColor: strokeColor.value
+    })
     
     const moveCallBack = function(e) {
         const mousePos = {
@@ -129,7 +141,10 @@ const downCBforPaths = function(e) {
      x: e.offsetX,
      y: e.offsetY
     }
-    currentShape = new Triangle(mousePos, type)
+    currentShape = new Triangle(mousePos, type, {
+        fillColor: fillColor.value,
+        strokeColor: strokeColor.value
+    })
 
  
  const moveCallBack = function(e) {
@@ -166,14 +181,14 @@ myCanvas.onpointerdown = downCBforPaths //default starting option
 
 function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
-    ctx.fillStyle = 'gray'
+    ctx.fillStyle = 'dodgerblue'
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
-
+    const scale = 1.3
     const stageProperties = {
-        width: 600,
-        height: 480,
-        left: canvasProperties.center.x - 600 / 2,
-        right: canvasProperties.center.y - 480 / 2
+        width: 600 * scale,
+        height: 480 * scale,
+        left: canvasProperties.center.x - 600 * scale / 2,
+        right: canvasProperties.center.y - 480 * scale / 2
     }
 
     ctx.fillStyle = 'white'

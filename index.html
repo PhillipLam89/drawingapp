@@ -9,7 +9,9 @@
   </head>
   <body>
     <canvas id="myCanvas"></canvas>
-    <select id="toolBox" onchange="changeTools(this)">
+    <section id="toolBox">
+
+    <select onchange="changeTools(this)">
       <option value="path" selected>Line</option>
       <option value="circle">Circle</option>
       <option value="rect">Rect</option>
@@ -17,6 +19,16 @@
       <option value="equilateralTriangle">Equilateral Triangle</option>
       <option value="rightTriangle">Right Triangle</option>
     </select>
+    <div>
+      <label for="fillColor" style="color: white; font-weight: bolder;">Fill Color</label>
+      <input type="color" id="fillColor" title="fillColor" value="#FF0000">
+      <br>
+      <label for="strokeColor" style="color: white; font-weight: bolder;">Line Color</label>
+      <input type="color" id="strokeColor" title="lineColor" value="#0000FF">
+
+    </div>
+  </section>
+  <script src="./shapes/shape.js"></script>
     <script src="./shapes/path.js"></script>
     <script src="./shapes/circle.js"></script>
     <script src="./shapes/triangle.js"></script>

@@ -1,8 +1,10 @@
-class Triangle {
-    constructor(corner1, type) {
+class Triangle extends Shape {
+    constructor(corner1, type, options) {
+        super()
         this.corner1 =  corner1
         this.corner2 = {}
         this.type = type
+        this.options = options
     }
 
     setCorner2(corner2) {

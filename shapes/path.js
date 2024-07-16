@@ -1,12 +1,15 @@
-class Path {
-    constructor(startPoint) {
+class Path extends Shape {
+    constructor(startPoint, options) {
+        super()
         this.points = [startPoint]
+        this.options = options
     }
     addPoint(point) {
         this.points.push(point)
     }
     draw(ctx) {
         ctx.beginPath()
+        ctx.strokeStyle = this.options.strokeColor
         ctx.setLineDash([])
         ctx.moveTo(this.points[0].x, this.points[0].y)
         
