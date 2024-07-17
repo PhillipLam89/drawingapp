@@ -169,14 +169,14 @@ myCanvas.onpointerdown = downCBforPaths //default starting option
 
 function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
-    ctx.fillStyle = 'dodgerblue'
+    ctx.fillStyle = 'grey'
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
-    const scale = 1.2
+    const scale = 1.1
     const stageProperties = {
-        width: 600 * scale,
-        height: 480 * scale,
-        left: canvasProperties.center.x - 600 * scale / 2,
-        right: canvasProperties.center.y - 480 * scale / 2
+        width: innerWidth / 2 * scale,
+        height: innerHeight/ 2 * scale,
+        left: canvasProperties.center.x  * scale / 2,
+        right: canvasProperties.center.y  * scale / 2
     }
 
     ctx.fillStyle = 'white'
@@ -206,6 +206,7 @@ function getOptions() {
         fillColor: fillColor.value,
         strokeColor: strokeColor.value,
         fill: fill.checked,
-        stroke: stroke.checked
+        stroke: stroke.checked,
+        strokeWidth: strokeWidth.value
     }
 }
