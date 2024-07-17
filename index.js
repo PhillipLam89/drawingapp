@@ -208,5 +208,6 @@ function getOptions() {
         fill: fill.checked,
         stroke: stroke.checked,
         strokeWidth: strokeWidth.value
+        
     }
 }
