@@ -3,6 +3,7 @@ class Shape {
         this.options = options
     }
     handleOptions(ctx) {
+        ctx.lineWidth = this.options.strokeWidth
         ctx.strokeStyle = this.options.strokeColor
         ctx.fillStyle = this.options.fillColor
         ctx.fillStyle && this.options.fill && ctx.fill()
