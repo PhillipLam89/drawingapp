@@ -80,7 +80,7 @@ const downCBforRects = function(e) { //handles rects
      }
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
-    clearAndRedrawCanvas()
+ 
     drawProperShapes([...shapes, currentShape])
   }
  
@@ -117,7 +117,7 @@ const downCBforPaths = function(e) {
         }
         currentShape.addPoint(mousePos)
     
-        clearAndRedrawCanvas()
+        // clearAndRedrawCanvas()
         drawProperShapes([...shapes, currentShape])
     
     }
@@ -152,7 +152,7 @@ const downCBforPaths = function(e) {
      }
     currentShape.setCorner2(mousePos) 
  
-    clearAndRedrawCanvas()
+
     drawProperShapes([...shapes, currentShape])
   }
  
@@ -198,9 +198,11 @@ function clearAndRedrawCanvas() {
         
 }
 function drawProperShapes(shapes) {
+    clearAndRedrawCanvas()
     for (const shape of shapes) { 
         shape.draw(ctx)
     }
+    helperCtx.clearRect(0,0, canvasProperties.width, canvasProperties.height)
     for (const shape of shapes) { 
         shape.drawHitRegion(helperCtx)
     }

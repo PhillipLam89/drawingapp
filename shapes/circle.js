@@ -8,6 +8,15 @@ class Circle extends Shape {
     setCorner2(corner2) {
         this.corner2 = corner2
     }
+    drawHitRegion(ctx) {
+        const startX = this.corner1.x
+        const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
+        const startY = this.corner1.y
+        ctx.beginPath()
+        ctx.strokeStyle = this.options.strokeColor
+        ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);  
+        super.applyHitRegionStyles(ctx)      
+    }
     draw(ctx) {
         
         const startX = this.corner1.x
