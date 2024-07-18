@@ -1,15 +1,25 @@
 const canvasProperties = {
-    width: innerWidth,
+    width: innerWidth / 2,
     height:innerHeight,
-    center: {x: innerWidth / 2, y: innerHeight / 2}
+    center: {x: innerWidth / 4, y: innerHeight / 2}
 }
 
 myCanvas.width = canvasProperties.width
 myCanvas.height = canvasProperties.height
 
+helperCanvas.width = canvasProperties.width
+helperCanvas.height = canvasProperties.height
+helperCanvas.style.border = '3px solid blue'
+
+
+
 const ctx = myCanvas.getContext('2d')
-ctx.lineWidth = 5
+const helperCtx = helperCanvas.getContext('2d')
 clearAndRedrawCanvas()
+helperCtx.fillStyle = 'red'
+helperCtx.fillRect(0,0 ,canvasProperties.width, canvasProperties.height)
+
+
 
 const shapes = []
 let currentShape = null
@@ -171,23 +181,28 @@ function clearAndRedrawCanvas() {
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
     ctx.fillStyle = 'grey'
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
-    const scale = 1.1
+    const scale = 1
     const stageProperties = {
-        width: innerWidth / 2 * scale,
-        height: innerHeight/ 2 * scale,
+        width: innerWidth / 4 * scale,
+        height: innerHeight/ 4* scale,
         left: canvasProperties.center.x  * scale / 2,
         right: canvasProperties.center.y  * scale / 2
     }
+    
 
     ctx.fillStyle = 'white'
     ctx.fillRect(stageProperties.left,  //our center drawing canvas
                 stageProperties.right, 
                 stageProperties.width, 
                 stageProperties.height)
+        
 }
 function drawProperShapes(shapes) {
     for (const shape of shapes) { 
         shape.draw(ctx)
+    }
+    for (const shape of shapes) { 
+        shape.drawHitRegion(helperCtx)
     }
 }
 function changeTools(tool) {
@@ -207,7 +222,7 @@ function getOptions() {
         strokeColor: strokeColor.value,
         fill: fill.checked,
         stroke: stroke.checked,
-        strokeWidth: strokeWidth.value
-        
+        strokeWidth: Number(strokeWidth.value)
+
     }
 }
