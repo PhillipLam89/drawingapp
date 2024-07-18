@@ -3,10 +3,12 @@ canvas {
     border: 2px solid rgb(255, 251, 30);
 
 }
-
+#helperCanvas{
+    display: none;
+}
 body {
     margin: 0;
-    overflow: hidden;
+    display: flex;
     box-sizing: border-box;
 }
 #toolBox {

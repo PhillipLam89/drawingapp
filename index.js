@@ -7,12 +7,38 @@ const canvasProperties = {
 myCanvas.width = canvasProperties.width
 myCanvas.height = canvasProperties.height
 
+helperCanvas.width = canvasProperties.width
+helperCanvas.height = canvasProperties.height
+
+
 const ctx = myCanvas.getContext('2d')
-ctx.lineWidth = 5
+const helperCtx = helperCanvas.getContext('2d')
 clearAndRedrawCanvas()
+helperCtx.fillStyle = 'white'
+helperCtx.fillRect(0,0 ,canvasProperties.width, canvasProperties.height)
 
 const shapes = []
 let currentShape = null
+
+const downCBforSelect = function(e) { //handles user selection
+   
+    const mousePos = {
+     x: e.offsetX,
+     y: e.offsetY
+    }
+    
+  const[r,g,b,a] = helperCtx.getImageData(mousePos.x, mousePos.y, 1,1).data
+
+  const id = r << 16 | g << 8 | b   //here we undo the right bit shift from Shape Class to get the id
+  
+  const selectedShape = shapes.find(shape => shape.id == id)
+  if (selectedShape) {
+    selectedShape.selected = !selectedShape.selected
+    drawProperShapes(shapes)
+  }
+
+}
+
 
 const downCBforCircles =  function(e) { 
 
@@ -30,7 +56,6 @@ const downCBforCircles =  function(e) {
      }
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
-    clearAndRedrawCanvas()
     drawProperShapes([...shapes, currentShape])
   }
  
@@ -70,7 +95,7 @@ const downCBforRects = function(e) { //handles rects
      }
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
-    clearAndRedrawCanvas()
+ 
     drawProperShapes([...shapes, currentShape])
   }
  
@@ -107,7 +132,7 @@ const downCBforPaths = function(e) {
         }
         currentShape.addPoint(mousePos)
     
-        clearAndRedrawCanvas()
+        // clearAndRedrawCanvas()
         drawProperShapes([...shapes, currentShape])
     
     }
@@ -123,7 +148,7 @@ const downCBforPaths = function(e) {
   
  }
 
- const downCBforTriangles = function(e) { //handles equilateral triangles
+const downCBforTriangles = function(e) { //handles equilateral triangles
    
     const type =
       [...document.querySelectorAll('option')]
@@ -142,7 +167,7 @@ const downCBforPaths = function(e) {
      }
     currentShape.setCorner2(mousePos) 
  
-    clearAndRedrawCanvas()
+
     drawProperShapes([...shapes, currentShape])
   }
  
@@ -171,27 +196,35 @@ function clearAndRedrawCanvas() {
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
     ctx.fillStyle = 'grey'
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
-    const scale = 1.1
+    const scale = 1
     const stageProperties = {
         width: innerWidth / 2 * scale,
         height: innerHeight/ 2 * scale,
         left: canvasProperties.center.x  * scale / 2,
         right: canvasProperties.center.y  * scale / 2
     }
+    
 
     ctx.fillStyle = 'white'
     ctx.fillRect(stageProperties.left,  //our center drawing canvas
                 stageProperties.right, 
                 stageProperties.width, 
                 stageProperties.height)
+        
 }
 function drawProperShapes(shapes) {
+    clearAndRedrawCanvas()
     for (const shape of shapes) { 
         shape.draw(ctx)
+    }
+    helperCtx.clearRect(0,0, canvasProperties.width, canvasProperties.height)
+    for (const shape of shapes) { 
+        shape.drawHitRegion(helperCtx)
     }
 }
 function changeTools(tool) {
     const shapeTypes = {
+        select: downCBforSelect,
         path: downCBforPaths,
         circle: downCBforCircles,
         rect: downCBforRects,
@@ -207,7 +240,7 @@ function getOptions() {
         strokeColor: strokeColor.value,
         fill: fill.checked,
         stroke: stroke.checked,
-        strokeWidth: strokeWidth.value
-        
+        strokeWidth: Number(strokeWidth.value)
+
     }
 }
