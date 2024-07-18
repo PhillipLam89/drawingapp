@@ -1,8 +1,4 @@
-canvas {
 
-    border: 2px solid rgb(255, 251, 30);
-
-}
 #helperCanvas{
     display: none;
 }
@@ -10,6 +6,9 @@ body {
     margin: 0;
     display: flex;
     box-sizing: border-box;
+    min-width: 100%;
+    overflow: hidden;
+    
 }
 #toolBox {
     position: absolute;

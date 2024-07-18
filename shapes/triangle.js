@@ -59,7 +59,6 @@ class Triangle extends Shape {
                   )
         ctx.lineTo(this.corner1.x , y )
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx)
-       
+        if (this.selected) this.drawGizmo(ctx)       
     }
 }
