@@ -17,6 +17,23 @@ class Circle extends Shape {
         ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);  
         super.applyHitRegionStyles(ctx)      
     }
+    drawGizmo(ctx) {
+        ctx.save()
+        ctx.lineWidth = this.options.strokeWidth
+        const startX = this.corner1.x
+        const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
+        const startY = this.corner1.y
+        ctx.beginPath()
+        ctx.strokeStyle = 'goldenrod'
+        ctx.lineWidth = this.options.strokeWidth
+                //(x,y,radius,startAngle, endAngle)
+        // ctx.arc(startX, startY, rad, Math.PI/2, 1.5* Math.PI,true);
+        ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);
+        ctx.setLineDash([3,13])
+        ctx.stroke()
+       
+        ctx.restore()
+    }
     draw(ctx) {
         
         const startX = this.corner1.x
@@ -28,5 +45,6 @@ class Circle extends Shape {
         // ctx.arc(startX, startY, rad, Math.PI/2, 1.5* Math.PI,true);
         ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);        
         super.handleOptions(ctx)
+        if (this.selected) this.drawGizmo(ctx)
     }
 }

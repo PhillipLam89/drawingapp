@@ -1,7 +1,7 @@
 const canvasProperties = {
-    width: innerWidth / 2,
+    width: innerWidth,
     height:innerHeight,
-    center: {x: innerWidth / 4, y: innerHeight / 2}
+    center: {x: innerWidth / 2, y: innerHeight / 2}
 }
 
 myCanvas.width = canvasProperties.width
@@ -9,20 +9,36 @@ myCanvas.height = canvasProperties.height
 
 helperCanvas.width = canvasProperties.width
 helperCanvas.height = canvasProperties.height
-helperCanvas.style.border = '3px solid blue'
-
 
 
 const ctx = myCanvas.getContext('2d')
 const helperCtx = helperCanvas.getContext('2d')
 clearAndRedrawCanvas()
-helperCtx.fillStyle = 'red'
+helperCtx.fillStyle = 'white'
 helperCtx.fillRect(0,0 ,canvasProperties.width, canvasProperties.height)
-
-
 
 const shapes = []
 let currentShape = null
+
+const downCBforSelect = function(e) { //handles user selection
+   
+    const mousePos = {
+     x: e.offsetX,
+     y: e.offsetY
+    }
+    
+  const[r,g,b,a] = helperCtx.getImageData(mousePos.x, mousePos.y, 1,1).data
+
+  const id = r << 16 | g << 8 | b   //here we undo the right bit shift from Shape Class to get the id
+  
+  const selectedShape = shapes.find(shape => shape.id == id)
+  if (selectedShape) {
+    selectedShape.selected = !selectedShape.selected
+    drawProperShapes(shapes)
+  }
+
+}
+
 
 const downCBforCircles =  function(e) { 
 
@@ -40,7 +56,6 @@ const downCBforCircles =  function(e) {
      }
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
-    clearAndRedrawCanvas()
     drawProperShapes([...shapes, currentShape])
   }
  
@@ -133,7 +148,7 @@ const downCBforPaths = function(e) {
   
  }
 
- const downCBforTriangles = function(e) { //handles equilateral triangles
+const downCBforTriangles = function(e) { //handles equilateral triangles
    
     const type =
       [...document.querySelectorAll('option')]
@@ -183,8 +198,8 @@ function clearAndRedrawCanvas() {
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
     const scale = 1
     const stageProperties = {
-        width: innerWidth / 4 * scale,
-        height: innerHeight/ 4* scale,
+        width: innerWidth / 2 * scale,
+        height: innerHeight/ 2 * scale,
         left: canvasProperties.center.x  * scale / 2,
         right: canvasProperties.center.y  * scale / 2
     }
@@ -209,6 +224,7 @@ function drawProperShapes(shapes) {
 }
 function changeTools(tool) {
     const shapeTypes = {
+        select: downCBforSelect,
         path: downCBforPaths,
         circle: downCBforCircles,
         rect: downCBforRects,
