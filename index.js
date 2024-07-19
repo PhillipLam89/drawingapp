@@ -33,9 +33,9 @@ const downCBforSelect = function(e) { //handles user selection
     
   const[r,g,b,a] = helperCtx.getImageData(mousePos.x, mousePos.y, 1,1).data
 
-  const id = r << 16 | g << 8 | b   //here we undo the right bit shift from Shape Class to get the id
+  const id = ''+r+g+b  
   
-  const selectedShape = shapes.find(shape => shape.id == id)
+  const selectedShape = shapes.find(shape => shape.id === id)
   if (selectedShape) {
     selectedShape.selected = !selectedShape.selected
     drawProperShapes(shapes)
