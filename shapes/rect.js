@@ -43,7 +43,7 @@ class Rect extends Shape {
                 width + pad * 2,
                 this.type === 'square' ? width + pad * 2  : height + pad * 2)
         ctx.strokeStyle = 'red'
-        ctx.lineWidth = pad
+        ctx.lineWidth = 3
         ctx.setLineDash([pad,5])
         ctx.stroke()
         ctx.restore()
