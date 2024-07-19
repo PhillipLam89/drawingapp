@@ -41,8 +41,8 @@ class Rect extends Shape {
         const maxY = Math.max(this.corner1.y, this.corner2.y)
         ctx.save()
         ctx.beginPath()
-        ctx.rect(minX,minY, maxX-minX, this.type === 'square' ? maxX-minX : maxY - minY)
-        ctx.strokeStyle = 'goldenrod'
+        ctx.rect(minX,minY, maxX-minX, this.type === 'square' ? maxX-minX  : maxY - minY)
+        ctx.strokeStyle = 'black'
         ctx.lineWidth = this.options.strokeWidth
         ctx.setLineDash([5,5])
         ctx.stroke()

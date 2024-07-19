@@ -28,36 +28,38 @@ class Path extends Shape {
      if (this.selected) this.drawGizmo(ctx)
     }
     drawGizmo(ctx) {
-        console.log('gizmo')
+     
+        
         const minX = Math.min(...this.points.map(p=>p.x))
         const minY = Math.min(...this.points.map(p=>p.y))
         const maxX = Math.max(...this.points.map(p=>p.x))
         const maxY = Math.max(...this.points.map(p=>p.y))
 
-        ctx.save()
-        ctx.strokeStyle = 'red'
-        ctx.lineWidth = this.options.strokeWidth   
-        ctx.beginPath()
-     
-        ctx.moveTo(this.points[0].x, this.points[0].y)
-        for(let i = 1; i < this.points.length;i++) { //start at index 1 since we have initial positions of index 0 already
-            ctx.lineTo(this.points[i].x, this.points[i].y)
-
-            if (i === this.points.length -1) {
-                ctx.lineTo(this.points[0].x, this.points[0].y)
-            }
-        }  
-        ctx.setLineDash([3,13])
-        ctx.stroke()       
-        ctx.restore()
-        
         // ctx.save()
+        // ctx.strokeStyle = 'red'
+        // ctx.lineWidth = this.options.strokeWidth   
         // ctx.beginPath()
-        // ctx.rect(minX,minY, maxX-minX, maxY - minY)
-        // ctx.strokeStyle = 'black'
-        // ctx.lineWidth = 8
-        // ctx.setLineDash([5,5])
-        // ctx.stroke()
+     
+        // ctx.moveTo(this.points[0].x, this.points[0].y)
+        // for(let i = 1; i < this.points.length;i++) { //start at index 1 since we have initial positions of index 0 already
+        //     ctx.lineTo(this.points[i].x, this.points[i].y)
+
+        //     if (i === this.points.length -1) {
+        //         ctx.lineTo(this.points[0].x, this.points[0].y)
+        //     }
+        // }  
+        // ctx.setLineDash([3,13])
+        // ctx.stroke()       
         // ctx.restore()
+        
+        ctx.save()
+        ctx.beginPath()
+        ctx.lineWidth = 3
+        ctx.rect(minX - this.options.strokeWidth,minY - this.options.strokeWidth, maxX-minX + this.options.strokeWidth * 2, maxY - minY+ this.options.strokeWidth * 2)
+        ctx.strokeStyle = 'red'
+       
+        ctx.setLineDash([this.options.strokeWidth,5])
+        ctx.stroke()
+        ctx.restore()
     }
 }

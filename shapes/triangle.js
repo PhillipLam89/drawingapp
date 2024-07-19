@@ -26,21 +26,20 @@ class Triangle extends Shape {
     }
     drawGizmo(ctx) {
         ctx.save()  
+        ctx.lineWidth = 3
         ctx.beginPath()
-        const minX = Math.min(this.corner1.x, this.corner2.x)
-        const y = this.corner1.y
-        const newY = this.corner2.y
+        // ctx.setLineDash([this.options.strokeWidth,5])
+       
+        const startX = Math.min(this.corner1.x, this.corner2.x)- this.options.strokeWidth
         const width = Math.abs(this.corner1.x - this.corner2.x)
-        ctx.moveTo(this.corner1.x, y)
-        ctx.lineTo(this.corner2.x,y)
         const height = width * Math.cos(Math.PI / 6)
-        ctx.lineTo(minX + (this.type ==='rightTriangle' ? 0 : width / 2 ),
-                  newY < y ? (y - height) : (y+height) 
-                  )
-        ctx.lineTo(this.corner1.x , y )
-        ctx.strokeStyle = 'goldenrod'
-        ctx.lineWidth = this.options.strokeWidth
-        ctx.setLineDash([5,5])
+        const startY = this.corner1.y - this.options.strokeWidth
+
+        const isDownwards = this.corner2.y > this.corner1.y
+
+        ctx.rect(startX , startY - (isDownwards ? 0 : height), width + this.options.strokeWidth * 2 , height + this.options.strokeWidth * 2)
+        ctx.strokeStyle = 'red' 
+        ctx.setLineDash([this.options.strokeWidth,5])
         ctx.stroke()
         ctx.restore()
 

@@ -19,18 +19,24 @@ class Circle extends Shape {
     }
     drawGizmo(ctx) {
         ctx.save()
-        ctx.lineWidth = this.options.strokeWidth
-        const startX = this.corner1.x
-        const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
-        const startY = this.corner1.y
+        ctx.lineWidth = 3
         ctx.beginPath()
-        ctx.strokeStyle = 'goldenrod'
-        ctx.lineWidth = this.options.strokeWidth
-                //(x,y,radius,startAngle, endAngle)
-        // ctx.arc(startX, startY, rad, Math.PI/2, 1.5* Math.PI,true);
-        ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);
-        ctx.setLineDash([3,13])
+        // ctx.setLineDash([this.options.strokeWidth,5])
+        const diameter = Math.abs(this.corner1.x - this.corner2.x) 
+        const startX = this.corner1.x - diameter / 2
+        
+        const startY = this.corner1.y  - diameter / 2
+        ctx.rect(startX - this.options.strokeWidth , startY - this.options.strokeWidth, diameter + this.options.strokeWidth * 2 , diameter + this.options.strokeWidth * 2)
+        ctx.strokeStyle = 'red' 
+        ctx.setLineDash([this.options.strokeWidth,5])
+        // ctx.beginPath()
+        // ctx.strokeStyle = 'goldenrod'
+        // ctx.lineWidth = this.options.strokeWidth
+        // ctx.arc(startX, startY, rad, 0, 2* Math.PI,true);
+        // ctx.setLineDash([3,13])
         ctx.stroke()
+
+
        
         ctx.restore()
     }

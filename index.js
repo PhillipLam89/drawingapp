@@ -18,6 +18,10 @@ helperCtx.fillStyle = 'white'
 helperCtx.fillRect(0,0 ,canvasProperties.width, canvasProperties.height)
 
 const shapes = []
+window.onresize = () => {
+ 
+    drawProperShapes(shapes)
+}
 let currentShape = null
 
 const downCBforSelect = function(e) { //handles user selection
