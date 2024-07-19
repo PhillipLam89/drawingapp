@@ -24,27 +24,25 @@ class Triangle extends Shape {
         ctx.lineTo(this.corner1.x , y )  
         super.applyHitRegionStyles(ctx)     
     }
-    drawGizmo(ctx) {
+    drawGizmo(ctx, startX, width, height, startY, newY,pad) {
         ctx.save()  
         ctx.lineWidth = 3
         ctx.beginPath()
-        // ctx.setLineDash([this.options.strokeWidth,5])
-       
-        const startX = Math.min(this.corner1.x, this.corner2.x)- this.options.strokeWidth
-        const width = Math.abs(this.corner1.x - this.corner2.x)
-        const height = width * Math.cos(Math.PI / 6)
-        const startY = this.corner1.y - this.options.strokeWidth
 
-        const isDownwards = this.corner2.y > this.corner1.y
+        const isDownwards = newY > this.corner1.y
 
-        ctx.rect(startX , startY - (isDownwards ? 0 : height), width + this.options.strokeWidth * 2 , height + this.options.strokeWidth * 2)
+        ctx.rect(startX , 
+                startY - (isDownwards ? 0 : height),
+                width + pad * 2 ,
+                height + pad * 2)
         ctx.strokeStyle = 'red' 
-        ctx.setLineDash([this.options.strokeWidth,5])
+        ctx.setLineDash([pad,5])
         ctx.stroke()
         ctx.restore()
 
     }
     draw(ctx, type = null) {
+        const pad = this.options.strokeWidth
         ctx.beginPath()
         const minX = Math.min(this.corner1.x, this.corner2.x)
         const y = this.corner1.y
@@ -58,6 +56,6 @@ class Triangle extends Shape {
                   )
         ctx.lineTo(this.corner1.x , y )
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx)       
+        if (this.selected) this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )       
     }
 }

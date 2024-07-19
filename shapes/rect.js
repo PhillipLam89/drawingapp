@@ -32,19 +32,19 @@ class Rect extends Shape {
         ctx.rect(minX,minY,width, height)
                     
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx)
+        if (this.selected) this.drawGizmo(ctx, minX,minY,width,height,this.options.strokeWidth)
     }
-    drawGizmo(ctx) {
-        const minX = Math.min(this.corner1.x, this.corner2.x)
-        const minY = Math.min(this.corner1.y, this.corner2.y)
-        const maxX = Math.max(this.corner1.x, this.corner2.x)
-        const maxY = Math.max(this.corner1.y, this.corner2.y)
+    drawGizmo(ctx, minX,minY, width, height,pad) {
+
         ctx.save()
         ctx.beginPath()
-        ctx.rect(minX,minY, maxX-minX, this.type === 'square' ? maxX-minX  : maxY - minY)
-        ctx.strokeStyle = 'black'
-        ctx.lineWidth = this.options.strokeWidth
-        ctx.setLineDash([5,5])
+        ctx.rect(minX - pad,
+                minY - pad, 
+                width + pad * 2,
+                this.type === 'square' ? width + pad * 2  : height + pad * 2)
+        ctx.strokeStyle = 'red'
+        ctx.lineWidth = pad
+        ctx.setLineDash([pad,5])
         ctx.stroke()
         ctx.restore()
     }
