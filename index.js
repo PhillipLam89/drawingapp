@@ -256,26 +256,13 @@ function changeFillColor(value) {
     drawProperShapes(shapes)
 }
 
-function toggleFill() {
-    shapes.filter(s => s.selected)
-        .forEach(s => s.options.fill = !s.options.fill)
+function handleUserChanges() {
+    shapes.filter(s => s.selected).forEach(s => {
+        s.options.fill = fill.checked
+        s.options.fillColor = fillColor.value
+        s.options.strokeColor = strokeColor.value
+        s.options.stroke = stroke.checked
+        s.options.strokeWidth = Number(strokeWidth.value)
+    })
     drawProperShapes(shapes)
-}
-function changeStrokeColor(value) {
-    shapes.filter(s => s.selected)
-          .forEach(s => s.options.strokeColor = value)
-    drawProperShapes(shapes)
-}
-function toggleStroke() {
-    shapes.filter(s => s.selected)
-        .forEach(s => s.options.stroke = !s.options.stroke)
-    drawProperShapes(shapes)
-}
-function changeStrokeWidth(value) {
-    shapes.filter(s => s.selected)
-        .forEach(s => s.options.strokeWidth = value)
-    drawProperShapes(shapes)
-}
-function handleUserChanges(value) {
-    
 }
