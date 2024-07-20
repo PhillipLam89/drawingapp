@@ -20,7 +20,8 @@ class Shape {
     }
 
     handleOptions(ctx) {
-  
+        ctx.lineCap = 'round'
+        ctx.lineJoin = 'round'
         ctx.lineWidth = this.options.strokeWidth
         ctx.strokeStyle = this.options.strokeColor
         ctx.fillStyle = this.options.fillColor
@@ -42,4 +43,4 @@ class Shape {
 function generateID() {
     return [~~(Math.random() * 256),~~(Math.random() * 256),~~(Math.random() * 256)]   
 }
-generateID()
+

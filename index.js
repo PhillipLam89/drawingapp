@@ -248,3 +248,34 @@ function getOptions() {
 
     }
 }
+
+function changeFillColor(value) {
+   
+    shapes.filter(s => s.selected)
+          .forEach(s => s.options.fillColor = value)
+    drawProperShapes(shapes)
+}
+
+function toggleFill() {
+    shapes.filter(s => s.selected)
+        .forEach(s => s.options.fill = !s.options.fill)
+    drawProperShapes(shapes)
+}
+function changeStrokeColor(value) {
+    shapes.filter(s => s.selected)
+          .forEach(s => s.options.strokeColor = value)
+    drawProperShapes(shapes)
+}
+function toggleStroke() {
+    shapes.filter(s => s.selected)
+        .forEach(s => s.options.stroke = !s.options.stroke)
+    drawProperShapes(shapes)
+}
+function changeStrokeWidth(value) {
+    shapes.filter(s => s.selected)
+        .forEach(s => s.options.strokeWidth = value)
+    drawProperShapes(shapes)
+}
+function handleUserChanges(value) {
+    
+}

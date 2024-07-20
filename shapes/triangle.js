@@ -54,7 +54,7 @@ class Triangle extends Shape {
         ctx.lineTo(minX + (this.type ==='rightTriangle' ? 0 : width / 2 ),
                   newY < y ? (y - height) : (y+height) 
                   )
-        ctx.lineTo(this.corner1.x , y )
+        ctx.lineTo(this.corner1.x  , y )
         super.handleOptions(ctx)
         if (this.selected) this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )       
     }
