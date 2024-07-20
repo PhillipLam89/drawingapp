@@ -249,13 +249,6 @@ function getOptions() {
     }
 }
 
-function changeFillColor(value) {
-   
-    shapes.filter(s => s.selected)
-          .forEach(s => s.options.fillColor = value)
-    drawProperShapes(shapes)
-}
-
 function handleUserChanges() {
     shapes.filter(s => s.selected).forEach(s => {
         s.options.fill = fill.checked
