@@ -24,15 +24,15 @@
       <option value="equilateralTriangle">Equilateral Triangle</option>
       <option value="rightTriangle">Right Triangle</option>
     </select>
-    <div>
+    <div id="changesDiv">
       <label for="fillColor" style="color: white; font-weight: bolder;">Fill Color</label>
-      <input type="color" id="fillColor" title="fillColor" value="#DFFF00">
-      <input type="checkbox" id="fill" checked title="fill">
+      <input oninput="changeFillColor(this.value)" type="color" id="fillColor" title="fillColor" value="#DFFF00">
+      <input oninput="toggleFill(this.checked)" type="checkbox" id="fill" checked title="fill">
       <br>
       <label for="strokeColor" style="color: white; font-weight: bolder;">Line Color</label>
-      <input type="color" id="strokeColor" title="lineColor" value="#0000FF">
-      <input type="checkbox" id="stroke" checked  title="stroke">
-      <input type="range" id="strokeWidth" value="5" min="1" max="100" title="Stroke Width">
+      <input oninput="changeStrokeColor(this.value)" type="color" id="strokeColor" title="lineColor" value="#0000FF">
+      <input oninput="toggleStroke(this.value)" type="checkbox" id="stroke" checked  title="stroke">
+      <input oninput="changeStrokeWidth(this.value)" type="range" id="strokeWidth" value="5" min="1" max="100" title="Stroke Width">
     </div>
   </section>
   <script src="./shapes/shape.js"></script>
