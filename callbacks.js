@@ -5,7 +5,7 @@ const downCBforSelect = function(e) { //handles user selection
      y: e.offsetY
     }
     
-  const[r,g,b,a] = helperCtx.
+  const[r,g,b] = helperCtx.
                   getImageData(startPos.x, startPos.y, 1,1).data
 
   const id = ''+r+g+b  
@@ -15,7 +15,6 @@ const downCBforSelect = function(e) { //handles user selection
   drawProperShapes(shapes)
  
   if (selectedShape) {
-    console.log('selected fag')
     selectedShape.selected = true
     const oldCenter = selectedShape.center
     drawProperShapes(shapes)

@@ -19,7 +19,7 @@ class Rect extends Shape {
      }   
     drawHitRegion(ctx) {
         ctx.beginPath()
-        const center=this.center?this.center:{x:0,y:0};
+        const center=this.center
         const minX = Math.min(this.corner1.x, this.corner2.x)
         const minY = Math.min(this.corner1.y, this.corner2.y)
         const width = Math.abs(this.corner1.x - this.corner2.x)
@@ -30,7 +30,7 @@ class Rect extends Shape {
     }
     draw(ctx) {
         ctx.beginPath()
-        const center=this.center?this.center:{x:0,y:0};
+        const center=this.center
         const minX = Math.min(this.corner1.x, this.corner2.x)
         const minY = Math.min(this.corner1.y, this.corner2.y)
         const width = Math.abs(this.corner1.x - this.corner2.x)
