@@ -177,7 +177,7 @@ const downCBforTriangles = function(e) { //handles equilateral triangles
   
      // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
      // myCanvas.removeEventListener('pointerup', upCallBack)
- 
+     currentShape.recenter()
      shapes.push(currentShape)
   
   }

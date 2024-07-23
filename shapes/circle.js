@@ -19,12 +19,10 @@ class Circle extends Shape {
     drawHitRegion(ctx) {
       
         ctx.beginPath()
-
         const center = this.center ? this.center : { x: 0, y: 0 };
         const startX = this.corner1.x
         const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
-        const startY = this.corner1.y
-       
+        const startY = this.corner1.y       
         ctx.strokeStyle = this.options.strokeColor
         ctx.arc(startX + center.x, startY + center.y, rad, 0, 2* Math.PI,true);  
         super.applyHitRegionStyles(ctx)      
