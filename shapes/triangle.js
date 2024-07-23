@@ -19,7 +19,7 @@ class Triangle extends Shape {
      }  
     drawHitRegion(ctx) {
         ctx.beginPath()
-        const center=this.center?this.center:{x:0,y:0};
+        const center=this.center
         const minX = Math.min(this.corner1.x, this.corner2.x)
         const y = this.corner1.y
         const newY = this.corner2.y
@@ -35,11 +35,10 @@ class Triangle extends Shape {
     }
     drawGizmo(ctx, startX, width, height, startY, newY,pad) {
         const center = this.center;
-        const points = this.getPoints();
         ctx.save()  
+
         ctx.lineWidth = 3
         ctx.beginPath()
-
         const isDownwards = newY > this.corner1.y
 
         ctx.rect(startX + center.x, 
@@ -49,11 +48,12 @@ class Triangle extends Shape {
         ctx.strokeStyle = 'red' 
         ctx.setLineDash([pad,5])
         ctx.stroke()
+        
         ctx.restore()
 
     }
     draw(ctx, type = null) {
-        const center=this.center?this.center:{x:0,y:0};
+        const center=this.center
         const pad = this.options.strokeWidth
         ctx.beginPath()
         const minX = Math.min(this.corner1.x, this.corner2.x)

@@ -19,7 +19,7 @@ class Circle extends Shape {
     drawHitRegion(ctx) {
       
         ctx.beginPath()
-        const center = this.center ? this.center : { x: 0, y: 0 };
+        const center = this.center
         const startX = this.corner1.x
         const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
         const startY = this.corner1.y       
@@ -27,12 +27,10 @@ class Circle extends Shape {
         ctx.arc(startX + center.x, startY + center.y, rad, 0, 2* Math.PI,true);  
         super.applyHitRegionStyles(ctx)      
     }
-    drawGizmo(ctx, diameter, startX, startY, pad) {
-        
+    drawGizmo(ctx, diameter, startX, startY, pad) {       
         const center = this.center;
-        const points = this.getPoints();
         ctx.save()
-
+        
         ctx.lineWidth = 4
         ctx.beginPath()
         ctx.rect(startX - pad + center.x , startY + center.y - pad, diameter + pad * 2 , diameter + pad * 2)
@@ -44,7 +42,7 @@ class Circle extends Shape {
     }
     draw(ctx) {
        
-        const center = this.center ? this.center : { x: 0, y: 0 };
+        const center = this.center 
         const startX = this.corner1.x
         const rad = Math.abs(this.corner1.x - this.corner2.x) / 2
         const startY = this.corner1.y
