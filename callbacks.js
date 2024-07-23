@@ -13,7 +13,7 @@ const downCBforSelect = function(e) { //handles user selection
   const selectedShape = shapes.find(shape => shape.id == id)
   shapes.forEach(s => s.selected = false)
   drawProperShapes(shapes)
-
+ 
   if (selectedShape) {
     console.log('selected fag')
     selectedShape.selected = true
@@ -64,7 +64,7 @@ const downCBforCircles =  function(e) {
   
      // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
      // myCanvas.removeEventListener('pointerup', upCallBack)
- 
+     currentShape.recenter()
      shapes.push(currentShape)
   
   }
