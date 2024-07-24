@@ -1,7 +1,7 @@
 class Path extends Shape {
     constructor(startPoint, options) {
         super(options) //can be put on parent class since all shapes use options from color picker
-        this.points = [startPoint]
+        this.points = new Array(startPoint)
     }
     addPoint(point) {
         this.points.push(point)

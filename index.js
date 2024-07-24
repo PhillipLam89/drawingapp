@@ -4,6 +4,8 @@ const canvasProperties = {
     center: {x: innerWidth / 2, y: innerHeight / 2}
 }
 
+
+
 myCanvas.width = canvasProperties.width
 myCanvas.height = canvasProperties.height
 

@@ -1,5 +1,5 @@
 const downCBforSelect = function(e) { //handles user selection
-   
+
     const startPos = {
      x: e.offsetX,
      y: e.offsetY
@@ -32,14 +32,26 @@ const downCBforSelect = function(e) { //handles user selection
   const upCallback = function(e) {
     myCanvas.onpointermove = ''
     myCanvas.onpointerup = upCallback
+
+    window.onkeydown = ({key}) => {
+      if (key === 'Delete') {
+          const index = shapes.findIndex(shape => shape.selected)
+          console.log(index)
+          shapes.splice(index,1)
+          drawProperShapes(shapes)
+      }
+  } 
   }
   myCanvas.onpointermove = moveCallback
   myCanvas.onpointerup = upCallback
+
+
+
 }
 }
 
 const downCBforCircles =  function(e) { 
-
+  window.onkeydown = ''
     const mousePos = {
      x: e.offsetX,
      y: e.offsetY
@@ -67,14 +79,14 @@ const downCBforCircles =  function(e) {
      shapes.push(currentShape)
   
   }
- //  myCanvas.addEventListener('pointermove', moveCallBack)
- //  myCanvas.addEventListener('pointerup', upCallBack)
+
   myCanvas.onpointermove = moveCallBack
   myCanvas.onpointerup = upCallBack
   
 }
 
 const downCBforRects = function(e) { //handles rects
+  window.onkeydown = ''
     const type =
     [...document.querySelectorAll('option')]
       .find(attr => attr.selected).value
@@ -115,7 +127,7 @@ const downCBforRects = function(e) { //handles rects
 }
 
 const downCBforPaths = function(e) {
-   
+   window.onkeydown = ''
     const mousePos = {
         x: e.offsetX,
         y: e.offsetY
@@ -148,7 +160,7 @@ const downCBforPaths = function(e) {
  }
 
 const downCBforTriangles = function(e) { //handles equilateral triangles
-   
+   window.onkeydown = ''
     const type =
       [...document.querySelectorAll('option')]
         .find(attr => attr.selected).value
