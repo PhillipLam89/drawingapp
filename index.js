@@ -28,10 +28,13 @@ let currentShape = null
 
 myCanvas.onpointerdown = downCBforPaths //default starting option
 
-
-function clearAndRedrawCanvas() {    
+function changeCanvasBG() {
+ clearAndRedrawCanvas(changeCanvasInput.value)
+ drawProperShapes(shapes,true)
+}
+function clearAndRedrawCanvas(color = 'grey') {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
-    ctx.fillStyle = 'grey'
+    ctx.fillStyle = color
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
     const scale = 1
     const stageProperties = {
@@ -49,8 +52,8 @@ function clearAndRedrawCanvas() {
                 stageProperties.height)
         
 }
-function drawProperShapes(shapes) {
-    clearAndRedrawCanvas()
+function drawProperShapes(shapes, onCanvasChange = false) {
+    clearAndRedrawCanvas(onCanvasChange ? changeCanvasInput.value : 'grey')
     for (const shape of shapes) { 
         shape.draw(ctx)
     }
