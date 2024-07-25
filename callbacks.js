@@ -12,12 +12,12 @@ const downCBforSelect = function(e) { //handles user selection
   
   const selectedShape = shapes.find(shape => shape.id == id)
   shapes.forEach(s => s.selected = false)
-  drawProperShapes(shapes)
+  drawProperShapes(shapes, true)
  
   if (selectedShape) {
     selectedShape.selected = true
     const oldCenter = selectedShape.center
-    drawProperShapes(shapes)
+    drawProperShapes(shapes,true)
 
     const moveCallback = function (e) {
         const mousePos = {
@@ -26,7 +26,7 @@ const downCBforSelect = function(e) { //handles user selection
         };
          const newPoint = subtractPoints(mousePos, startPos);
          selectedShape.setCenter(addPoints(oldCenter, newPoint));
-         drawProperShapes(shapes);
+         drawProperShapes(shapes,true);
   }
 
   const upCallback = function(e) {
@@ -37,7 +37,7 @@ const downCBforSelect = function(e) { //handles user selection
       if (key === 'Delete') {
           const index = shapes.findIndex(shape => shape.selected)
           shapes.splice(index,1)
-          drawProperShapes(shapes)
+          drawProperShapes(shapes,true)
       }
   } 
   }
