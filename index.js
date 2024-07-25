@@ -28,7 +28,7 @@ let currentShape = null
 
 myCanvas.onpointerdown = downCBforPaths //default starting option
 
-function changeCanvasBG() {
+changeCanvas.oninput = function changeCanvasBG() {
  clearAndRedrawCanvas(changeCanvasInput.value)
  drawProperShapes(shapes,true)
 }
