@@ -34,6 +34,10 @@
       <input  type="checkbox" id="stroke" checked  title="stroke">
       <input  type="range" id="strokeWidth" value="5" min="1" max="75" title="Stroke Width">
     </div>
+    <section oninput="changeCanvasBG()" id="changeCanvas">
+      <label for="changeCanvas" style="color: white; font-weight: bolder;">Change Canvas</label>
+      <input  type="color" id="changeCanvasInput" title="changeCanvas" value="#808080">
+    </section>
   </section>
   <script src="./callbacks.js"></script>
   <script src="./utils.js"></script>
