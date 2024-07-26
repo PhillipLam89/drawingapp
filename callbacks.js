@@ -12,12 +12,12 @@ const downCBforSelect = function(e) { //handles user selection
   
   const selectedShape = shapes.find(shape => shape.id == id)
   shapes.forEach(s => s.selected = false)
-  drawProperShapes(shapes, true)
+  drawProperShapes(shapes)
  
   if (selectedShape) {
     selectedShape.selected = true
     const oldCenter = selectedShape.center
-    drawProperShapes(shapes,true)
+    drawProperShapes(shapes)
 
     const moveCallback = function (e) {
         const mousePos = {
@@ -26,7 +26,7 @@ const downCBforSelect = function(e) { //handles user selection
         };
          const newPoint = subtractPoints(mousePos, startPos);
          selectedShape.setCenter(addPoints(oldCenter, newPoint));
-         drawProperShapes(shapes,true);
+         drawProperShapes(shapes);
   }
 
   const upCallback = function(e) {
@@ -37,7 +37,7 @@ const downCBforSelect = function(e) { //handles user selection
       if (key === 'Delete') {
           const index = shapes.findIndex(shape => shape.selected)
           shapes.splice(index,1)
-          drawProperShapes(shapes,true)
+          drawProperShapes(shapes)
       }
   } 
   }
@@ -50,6 +50,7 @@ const downCBforSelect = function(e) { //handles user selection
 }
 
 const downCBforCircles =  function(e) { 
+  deselectAll()
   window.onkeydown = ''
     const mousePos = {
      x: e.offsetX,
@@ -65,7 +66,7 @@ const downCBforCircles =  function(e) {
      }
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
-    drawProperShapes([...shapes, currentShape], true)
+    drawProperShapes([...shapes, currentShape])
   }
  
   const upCallBack = function(e) {
@@ -85,6 +86,7 @@ const downCBforCircles =  function(e) {
 }
 
 const downCBforRects = function(e) { //handles rects
+  deselectAll()
   window.onkeydown = ''
     const type =
     [...document.querySelectorAll('option')]
@@ -105,7 +107,7 @@ const downCBforRects = function(e) { //handles rects
     currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
  
  
-    drawProperShapes([...shapes, currentShape], true)
+    drawProperShapes([...shapes, currentShape])
   }
  
   const upCallBack = function(e) {
@@ -126,7 +128,8 @@ const downCBforRects = function(e) { //handles rects
 }
 
 const downCBforPaths = function(e) {
-   window.onkeydown = ''
+  deselectAll() 
+  window.onkeydown = ''
     const mousePos = {
         x: e.offsetX,
         y: e.offsetY
@@ -142,7 +145,7 @@ const downCBforPaths = function(e) {
         currentShape.addPoint(mousePos)
     
         // clearAndRedrawCanvas()
-        drawProperShapes([...shapes, currentShape], true)
+        drawProperShapes([...shapes, currentShape])
     
     }
  
@@ -159,7 +162,8 @@ const downCBforPaths = function(e) {
  }
 
 const downCBforTriangles = function(e) { //handles equilateral triangles
-   window.onkeydown = ''
+  deselectAll() 
+  window.onkeydown = ''
     const type =
       [...document.querySelectorAll('option')]
         .find(attr => attr.selected).value
@@ -178,7 +182,7 @@ const downCBforTriangles = function(e) { //handles equilateral triangles
     currentShape.setCorner2(mousePos) 
  
 
-    drawProperShapes([...shapes, currentShape], true)
+    drawProperShapes([...shapes, currentShape])
   }
  
   const upCallBack = function(e) {
