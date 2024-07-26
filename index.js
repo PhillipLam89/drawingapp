@@ -28,9 +28,10 @@ let currentShape = null
 
 myCanvas.onpointerdown = downCBforPaths //default starting option
 
-changeCanvas.onchange = function changeCanvasBG() {
+changeCanvas.oninput = function changeCanvasBG() {
+
  clearAndRedrawCanvas(changeCanvasInput.value)
- drawProperShapes(shapes,true)
+ drawProperShapes(shapes)
 }
 function clearAndRedrawCanvas(color = 'grey') {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
@@ -45,15 +46,15 @@ function clearAndRedrawCanvas(color = 'grey') {
     }
     
 
-    ctx.fillStyle = 'white'
-    ctx.fillRect(stageProperties.left,  //our center drawing canvas
-                stageProperties.right, 
-                stageProperties.width, 
-                stageProperties.height)
+    // ctx.fillStyle = 'white'
+    // ctx.fillRect(stageProperties.left,  //our center drawing canvas
+    //             stageProperties.right, 
+    //             stageProperties.width, 
+    //             stageProperties.height)
         
 }
-function drawProperShapes(shapes, onCanvasChange = false) {
-    clearAndRedrawCanvas(onCanvasChange ? changeCanvasInput.value : 'grey')
+function drawProperShapes(shapes) {
+    clearAndRedrawCanvas(changeCanvasInput.value)
     for (const shape of shapes) { 
         shape.draw(ctx)
     }
@@ -63,6 +64,8 @@ function drawProperShapes(shapes, onCanvasChange = false) {
     }
 }
 function changeTools(tool) {
+    console.log('change tools')
+    deselectAll()
     const shapeTypes = {
         select: downCBforSelect,
         path: downCBforPaths,
@@ -86,6 +89,7 @@ function getOptions() {
 }
 
 function handleUserChanges() {
+
     shapes.filter(s => s.selected).forEach(s => {
         s.options.fill = fill.checked
         s.options.fillColor = fillColor.value
@@ -93,5 +97,10 @@ function handleUserChanges() {
         s.options.stroke = stroke.checked
         s.options.strokeWidth = Number(strokeWidth.value)
     })
+    drawProperShapes(shapes)
+}
+
+function deselectAll() {
+    shapes.forEach(s => s.selected = false)
     drawProperShapes(shapes)
 }
