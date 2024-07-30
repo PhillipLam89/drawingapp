@@ -64,7 +64,6 @@ function drawProperShapes(shapes) {
     }
 }
 function changeTools(tool) {
-    console.log('change tools')
     deselectAll()
     const shapeTypes = {
         select: downCBforSelect,
