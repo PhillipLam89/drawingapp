@@ -26,21 +26,21 @@
     </select>
     <div id="changesDiv" oninput=handleUserChanges()>
       <label for="fillColor" style="color: white; font-weight: bolder;">Fill Color</label>
-      <input  type="color" id="fillColor" title="fillColor" value="#DFFF00">
+      <input  type="color" id="fillColor" title="fillColor" value="#40FF23">
       <input  type="checkbox" id="fill" checked title="fill">
       <br>
       <label for="strokeColor" style="color: white; font-weight: bolder;">Line Color</label>
-      <input  type="color" id="strokeColor" title="lineColor" value="#0000FF">
+      <input  type="color" id="strokeColor" title="lineColor" value="#FF1493">
       <input  type="checkbox" id="stroke" checked  title="stroke">
-      <input  type="range" id="strokeWidth" value="5" min="1" max="100" title="Stroke Width">
+      <input  type="range" id="strokeWidth" value="5" min="1" max="75" title="Stroke Width">
     </div>
     <section id="changeCanvas">
-      <label for="changeCanvas" style="color: white; font-weight: bolder;">Change Canvas</label>
+      <label for="changeCanvasInput" style="color: white; font-weight: bolder;">Change Canvas</label>
       <input  type="color" id="changeCanvasInput" title="changeCanvas" value="#808080">
     </section>
   </section>
   <script src="./callbacks.js"></script>
-  <script src="./utils.js"></script>
+
   <script src="./shapes/shape.js"></script>
   <script src="./shapes/rect.js"></script> 
     <script src="./shapes/path.js"></script>
@@ -48,5 +48,6 @@
     <script src="./shapes/triangle.js"></script>
  
     <script src="./index.js"></script>
+    <script src="./vector.js"></script>
   </body>
 </html>
