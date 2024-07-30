@@ -15,6 +15,6 @@ body {
     top: 0;
     margin: 2vw;
 }
-#changesDiv {
+body {
     user-select: none;
 }
