@@ -17,7 +17,7 @@ if (selectedShape) {
   selectedShape.selected = true
   const oldCenter = selectedShape.center
   drawProperShapes(shapes)
-  updateProperties(selectedShape)
+
   const moveCallback = function (e) {
        const mousePos = new Vector(e.offsetX, e.offsetY)
        const newPoint = Vector.subtract(mousePos, startPos);
@@ -36,6 +36,7 @@ if (selectedShape) {
           drawProperShapes(shapes)
       }
   } 
+  updateProperties(selectedShape)
   }
   myCanvas.onpointermove = moveCallback
   myCanvas.onpointerup = upCallback
