@@ -106,6 +106,7 @@ function deselectAll() {
 }
 
 
+
 function changeX(value) {
     shapes.filter(s => s.selected).forEach(s => (s.center.x = Number(value)))
     drawProperShapes(shapes)
@@ -124,3 +125,4 @@ function updateProperties(selectedShape) {
     x.value = selectedShape.center.x.toFixed(2)
     y.value = selectedShape.center.y.toFixed(2)
 }
+
