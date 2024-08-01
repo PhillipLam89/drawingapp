@@ -1,3 +1,4 @@
+
 const canvasProperties = {
     width: innerWidth,
     height:innerHeight,
@@ -65,6 +66,7 @@ function drawProperShapes(shapes) {
 }
 function changeTools(tool) {
     deselectAll()
+    properties.style.display = 'none'
     const shapeTypes = {
         select: downCBforSelect,
         path: downCBforPaths,

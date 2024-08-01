@@ -1,19 +1,21 @@
 const downCBforSelect = function(e) { //handles user selection
     
+  const aShapeIsSelected = shapes.some(s => s.selected)
+  if (aShapeIsSelected) properties.style.display = 'none'
   
   const startPos = new Vector(e.offsetX, e.offsetY)
   
-const[r,g,b] = helperCtx.
-                getImageData(startPos.x, startPos.y, 1,1).data
+  const[r,g,b] = helperCtx.
+                  getImageData(startPos.x, startPos.y, 1,1).data
 
-const id = ''+r+g+b  
+  const id = ''+r+g+b  
 
-const selectedShape = shapes.find(shape => shape.id == id)
-shapes.forEach(s => s.selected = false)
-drawProperShapes(shapes)
+  const selectedShape = shapes.find(shape => shape.id == id)
+  shapes.forEach(s => s.selected = false)
+  drawProperShapes(shapes)
 
 if (selectedShape) {
-
+  properties.style.display = 'unset'
   selectedShape.selected = true
   const oldCenter = selectedShape.center
   drawProperShapes(shapes)
@@ -138,7 +140,6 @@ myCanvas.onpointerup = upCallBack
 
 const downCBforTriangles = function(e) { //handles equilateral triangles
 deselectAll() 
-
 window.onkeydown = ''
   const type =
     [...document.querySelectorAll('option')]
