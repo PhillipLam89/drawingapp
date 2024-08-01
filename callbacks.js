@@ -1,5 +1,6 @@
 const downCBforSelect = function(e) { //handles user selection
-
+    
+  
   const startPos = new Vector(e.offsetX, e.offsetY)
   
 const[r,g,b] = helperCtx.
@@ -12,10 +13,11 @@ shapes.forEach(s => s.selected = false)
 drawProperShapes(shapes)
 
 if (selectedShape) {
+
   selectedShape.selected = true
   const oldCenter = selectedShape.center
   drawProperShapes(shapes)
-
+  updateProperties(selectedShape)
   const moveCallback = function (e) {
        const mousePos = new Vector(e.offsetX, e.offsetY)
        const newPoint = Vector.subtract(mousePos, startPos);
@@ -23,24 +25,21 @@ if (selectedShape) {
        drawProperShapes(shapes);
 }
 
-const upCallback = function(e) {
-  myCanvas.onpointermove = ''
+  const upCallback = function(e) {
+    myCanvas.onpointermove = ''
+    myCanvas.onpointerup = upCallback
+
+    window.onkeydown = ({key}) => {
+      if (key === 'Delete') {
+          const index = shapes.findIndex(shape => shape.selected)
+          shapes.splice(index,1)
+          drawProperShapes(shapes)
+      }
+  } 
+  }
+  myCanvas.onpointermove = moveCallback
   myCanvas.onpointerup = upCallback
-
-  window.onkeydown = ({key}) => {
-    if (key === 'Delete') {
-        const index = shapes.findIndex(shape => shape.selected)
-        shapes.splice(index,1)
-        drawProperShapes(shapes)
-    }
-} 
-}
-myCanvas.onpointermove = moveCallback
-myCanvas.onpointerup = upCallback
-
-
-
-}
+  } 
 }
 
 const downCBforCircles =  function(e) { 
@@ -138,10 +137,12 @@ myCanvas.onpointerup = upCallBack
 
 const downCBforTriangles = function(e) { //handles equilateral triangles
 deselectAll() 
+
 window.onkeydown = ''
   const type =
     [...document.querySelectorAll('option')]
       .find(attr => attr.selected).value
+
       const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Triangle(mousePos, type, getOptions())
 
