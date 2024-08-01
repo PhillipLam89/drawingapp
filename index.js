@@ -1,7 +1,7 @@
 const canvasProperties = {
     width: innerWidth,
     height:innerHeight,
-    center: {x: innerWidth / 2, y: innerHeight / 2}
+    center: {x: innerWidth , y: innerHeight }
 }
 
 
@@ -16,8 +16,8 @@ helperCanvas.height = canvasProperties.height
 const ctx = myCanvas.getContext('2d')
 const helperCtx = helperCanvas.getContext('2d')
 clearAndRedrawCanvas()
-helperCtx.fillStyle = 'white'
-helperCtx.fillRect(0,0 ,canvasProperties.width, canvasProperties.height)
+helperCtx.fillStyle = 'red'
+helperCtx.fillRect(0,0 ,canvasProperties.width / 2, canvasProperties.height / 2)
 
 const shapes = []
 
@@ -75,6 +75,7 @@ function changeTools(tool) {
         rightTriangle:downCBforTriangles
     }
     myCanvas.onpointerdown = shapeTypes[tool.value]
+
 }
 function getOptions() {
     return {
@@ -103,3 +104,25 @@ function deselectAll() {
     shapes.forEach(s => s.selected = false)
     drawProperShapes(shapes)
 }
+
+
+
+function changeX(value) {
+    shapes.filter(s => s.selected).forEach(s => (s.center.x = Number(value)))
+    drawProperShapes(shapes)
+}
+function changeY(value) {
+    shapes.filter(s => s.selected).forEach(s => (s.center.y = Number(value)))
+    drawProperShapes(shapes)
+}
+
+function updateProperties(selectedShape) {
+    if (!selectedShape) {
+        properties.innerHTML = ''
+        return
+    }
+
+    x.value = selectedShape.center.x.toFixed(2)
+    y.value = selectedShape.center.y.toFixed(2)
+}
+

@@ -19,6 +19,8 @@ class Triangle extends Shape {
      }  
     drawHitRegion(ctx) {
         ctx.beginPath()
+        ctx.lineCap = 'round'
+        ctx.lineJoin = 'round'
         const center=this.center
         const minX = Math.min(this.corner1.x, this.corner2.x)
         const y = this.corner1.y
@@ -30,11 +32,12 @@ class Triangle extends Shape {
         ctx.lineTo(minX + center.x + (this.type ==='rightTriangle' ? 0 : width / 2 ),
                   newY < y ? (y - height + center.y) : (y+height + center.y) 
                   )
-        ctx.lineTo(this.corner1.x , y )  
+        ctx.lineTo(this.corner1.x + center.x , y + center.y)
         super.applyHitRegionStyles(ctx)     
     }
     drawGizmo(ctx, startX, width, height, startY, newY,pad) {
         const center = this.center;
+       
         ctx.save()  
 
         ctx.lineWidth = 3
@@ -53,7 +56,7 @@ class Triangle extends Shape {
 
     }
     draw(ctx, type = null) {
-        const center=this.center
+        const center = this.center
         const pad = this.options.strokeWidth
         ctx.beginPath()
         const minX = Math.min(this.corner1.x, this.corner2.x)
