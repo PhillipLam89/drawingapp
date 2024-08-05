@@ -11,10 +11,11 @@ const downCBforSelect = function(e) { //handles user selection
   const id = ''+r+g+b  
 
   const selectedShape = shapes.find(shape => shape.id == id)
-  shapes.forEach(s => s.selected = false)
+   shapes.forEach(s => s.selected = false)
   drawProperShapes(shapes)
 
 if (selectedShape) {
+
   properties.style.display = 'unset'
   selectedShape.selected = true
   const oldCenter = selectedShape.center

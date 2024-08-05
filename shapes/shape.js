@@ -6,19 +6,21 @@ class Shape {
         this.idArr = generateID() //max number of colors
         this.id = this.idArr.join('')
         this.center = {x:0,y:0}
+        this.size = {width:0,height:0}
     }
     setCenter(center) {
-        this.center = center;
+        this.center = center
      }
      recenter() {
-        const points = this.getPoints();
-        this.center = Vector.midVector(points);
+        const points = this.getPoints()
+        this.center = Vector.midVector(points)
+        this.size = getSize(points, this.type)
         for (const point of points) {
-           const newPoint = Vector.subtract(point, this.center);
-           point.x = newPoint.x;
-           point.y = newPoint.y;
+           const newPoint = Vector.subtract(point, this.center)
+           point.x = newPoint.x
+           point.y = newPoint.y
         }
-        this.setPoints(points);
+        this.setPoints(points)
      }
     applyHitRegionStyles(ctx) {
         const [red,green,blue] = this.idArr
@@ -45,28 +47,7 @@ class Shape {
         ctx.strokeStyle && this.options.stroke && ctx.stroke()      
         ctx.restore()
     }
-    // drawGizmo(ctx) {
-     
-    //     const center = this.center;
-    //     const points = this.getPoints(); 
-    //     const minX = Math.min(...this.points.map(p=>p.x))
-    //     const minY = Math.min(...this.points.map(p=>p.y))
-    //     const maxX = Math.max(...this.points.map(p=>p.x))
-    //     const maxY = Math.max(...this.points.map(p=>p.y))
 
-    //     ctx.save()
-    //     ctx.beginPath()
-        
-    //     ctx.rect(minX + center.x - this.options.strokeWidth,minY + center.y - this.options.strokeWidth, maxX-minX + this.options.strokeWidth * 2, maxY - minY+ this.options.strokeWidth * 2)
-    //     ctx.strokeStyle = 'red'
-    //     ctx.lineWidth = 3
-    //     ctx.setLineDash([this.options.strokeWidth,5])
-    //     ctx.stroke()
-    //     ctx.beginPath()
-    //     ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
-    //     ctx.stroke()
-    //     ctx.restore()
-    // }
     drawHitRegion(ctx) {
         throw new Error('not implemented')
     }
@@ -77,4 +58,23 @@ class Shape {
 
 function generateID() {
     return [~~(Math.random() * 256),~~(Math.random() * 256),~~(Math.random() * 256)]   
+}
+
+function getSize(allPoints, type) {
+    const minX = Math.min(...allPoints.map(p=>p.x))
+    const minY = Math.min(...allPoints.map(p=>p.y))
+    const maxX = Math.max(...allPoints.map(p=>p.x))
+    const maxY = Math.max(...allPoints.map(p=>p.y))
+
+    if (type === 'square' || type === 'circle') {
+        return {
+            width: ~~(maxX-minX),
+            height: ~~(maxX-minX)
+        }
+    }
+
+    return {
+        width: ~~(maxX-minX),
+        height: ~~(maxY-minY)
+    }
 }
