@@ -6,7 +6,7 @@ class Shape {
         this.idArr = generateID() //max number of colors
         this.id = this.idArr.join('')
         this.center = {x:0,y:0}
-        this.size = {width:0,height:0}
+        this.size = null
     }
     setCenter(center) {
         this.center = center
