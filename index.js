@@ -15,6 +15,7 @@ helperCanvas.height = canvasProperties.height
 
 
 const ctx = myCanvas.getContext('2d')
+
 const helperCtx = helperCanvas.getContext('2d')
 clearAndRedrawCanvas()
 helperCtx.fillStyle = 'red'
@@ -114,8 +115,14 @@ function changeX(value) {
     drawProperShapes(shapes)
 }
 function changeY(value) {
-    shapes.filter(s => s.selected).forEach(s => (s.center.y = Number(value)))
+
+    shapes.filter(s => s.selected).forEach(s => {
+        (s.center.y = Number(value))
+      
+    })
+
     drawProperShapes(shapes)
+    
 }
 
 function updateProperties(selectedShape) {
@@ -123,8 +130,28 @@ function updateProperties(selectedShape) {
         properties.innerHTML = ''
         return
     }
+    // const allPoints = [...selectedShape.points]
 
-    x.value = selectedShape.center.x.toFixed(2)
-    y.value = selectedShape.center.y.toFixed(2)
+    // const minX = Math.min(...allPoints.map(p=>p.x))
+    // const minY = Math.min(...allPoints.map(p=>p.y))
+    // const maxX = Math.max(...allPoints.map(p=>p.x))
+    // const maxY = Math.max(...allPoints.map(p=>p.y))
+
+  
+    // const width = maxX - minX
+    // const height = maxY - minY
+
+    // widthInput.value = ~~width
+    // heightInput.value = ~~height
+
+    centerXInput.value = ~~selectedShape.center.x
+    centerYInput.value = ~~selectedShape.center.y
+
+    
+    widthInput.value = selectedShape.size.width
+    heightInput.value = selectedShape.size.height
 }
 
+function changeWidth(value) {
+
+}

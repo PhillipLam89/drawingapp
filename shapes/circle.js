@@ -3,6 +3,7 @@ class Circle extends Shape {
         super(options)
         this.corner1 =  corner1
         this.corner2 = corner1   
+        this.type ='circle'
     }
 
     setCorner2(corner2) {
