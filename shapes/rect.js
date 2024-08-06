@@ -36,8 +36,8 @@ class Rect extends Shape {
         ctx.beginPath()
         const center=this.center
         let left,top,width,height;
-        const minX = Math.min([...this.getPoints().map(obj => obj.x)])
-        const minY = Math.min([...this.getPoints().map(obj => obj.y)])
+        let minX = Math.min(this.corner1.x, this.corner2.x)
+        let minY = Math.min(this.corner1.y, this.corner2.y)
         if (this.size) {
             left = center.x - this.size.width / 2
             top = center.y - this.size.height / 2
@@ -45,7 +45,7 @@ class Rect extends Shape {
             height = this.size.height
         } else {
             width = Math.abs(this.corner1.x - this.corner2.x)
-            height = Math.abs(this.corner1.y - this.corner2.y)
+            height = this.type === 'square' ? width :  Math.abs(this.corner1.y - this.corner2.y)
             left = minX + center.x
             top = minY + center.y
         }
@@ -70,24 +70,25 @@ class Rect extends Shape {
             height = this.size.height
         } else {
             width = Math.abs(this.corner1.x - this.corner2.x)
-            height = Math.abs(this.corner1.y - this.corner2.y)
+            height = this.type === 'square' ? width : (Math.abs(this.corner1.y - this.corner2.y))
             left = minX + center.x
             top = minY + center.y
+
         }
         ctx.rect(left,top,width,height)
-        
+
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx, minX,minY,width,height,this.options.strokeWidth)
+        if (this.selected) this.drawGizmo(ctx, left,top,width,height,this.options.strokeWidth)
     }
     drawGizmo(ctx, minX,minY, width, height,pad) {
         const center = this.center;
         const points = this.getPoints();
         ctx.save()
         ctx.beginPath()
-        ctx.rect(minX + center.x - pad,
-                minY + center.y - pad, 
+        ctx.rect(minX  - pad,
+                minY  - pad, 
                 width + pad * 2,
-                this.type === 'square' ? width + pad * 2  : height + pad * 2)
+                height + pad * 2)
         ctx.strokeStyle = 'red'
         ctx.lineWidth = 3
         ctx.setLineDash([pad,5])
