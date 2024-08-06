@@ -88,6 +88,7 @@ window.onkeydown = ''
 
 
 const moveCallBack = function(e) {
+
   const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
 

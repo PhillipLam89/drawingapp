@@ -6,7 +6,7 @@ class Shape {
         this.idArr = generateID() //max number of colors
         this.id = this.idArr.join('')
         this.center = {x:0,y:0}
-        this.size = {width:0,height:0}
+        this.size = null
     }
     setCenter(center) {
         this.center = center
@@ -68,13 +68,13 @@ function getSize(allPoints, type) {
 
     if (type === 'square' || type === 'circle') {
         return {
-            width: ~~(maxX-minX),
-            height: ~~(maxX-minX)
+            width: (maxX-minX),
+            height: (maxX-minX)
         }
     }
 
     return {
-        width: ~~(maxX-minX),
-        height: ~~(maxY-minY)
+        width: (maxX-minX),
+        height: (maxY-minY)
     }
 }

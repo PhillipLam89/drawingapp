@@ -14,42 +14,80 @@ class Rect extends Shape {
      }
      
      setPoints(points) {
-        this.corner1 = points[0];
-        this.corner2 = points[1];
+
      }   
+     setWidth(width) {
+        this.size.width = width
+       
+     }
+
+     setHeight(height) {
+        this.size.height = height
+     }
     drawHitRegion(ctx) {
+        // ctx.beginPath()
+        // const center=this.center
+        // const minX = Math.min(this.corner1.x, this.corner2.x)
+        // const minY = Math.min(this.corner1.y, this.corner2.y)
+        // const width = Math.abs(this.corner1.x - this.corner2.x)
+        // const height = this.type === 'square' ?
+        //                width : Math.abs(this.corner1.y - this.corner2.y)
+        //                ctx.rect(minX + center.x,minY + center.y,width, height)
         ctx.beginPath()
         const center=this.center
-        const minX = Math.min(this.corner1.x, this.corner2.x)
-        const minY = Math.min(this.corner1.y, this.corner2.y)
-        const width = Math.abs(this.corner1.x - this.corner2.x)
-        const height = this.type === 'square' ?
-                       width : Math.abs(this.corner1.y - this.corner2.y)
-                       ctx.rect(minX + center.x,minY + center.y,width, height)
+        let left,top,width,height;
+        let minX = Math.min(this.corner1.x, this.corner2.x)
+        let minY = Math.min(this.corner1.y, this.corner2.y)
+        if (this.size) {
+            left = center.x - this.size.width / 2
+            top = center.y - this.size.height / 2
+            width = this.size.width
+            height = this.size.height
+        } else {
+            width = Math.abs(this.corner1.x - this.corner2.x)
+            height = this.type === 'square' ? width :  Math.abs(this.corner1.y - this.corner2.y)
+            left = minX + center.x
+            top = minY + center.y
+        }
+        ctx.rect(left,top,width,height)
         super.applyHitRegionStyles(ctx) 
     }
     draw(ctx) {
         ctx.beginPath()
         const center=this.center
-        const minX = Math.min(this.corner1.x, this.corner2.x)
-        const minY = Math.min(this.corner1.y, this.corner2.y)
-        const width = Math.abs(this.corner1.x - this.corner2.x)
-        const height = this.type === 'square' ?
-                       width : Math.abs(this.corner1.y - this.corner2.y)
-        ctx.rect(minX + center.x,minY + center.y,width, height)
-                    
+        // const minX = Math.min(this.corner1.x, this.corner2.x)
+        // const minY = Math.min(this.corner1.y, this.corner2.y)
+        // const width = Math.abs(this.corner1.x - this.corner2.x)
+        // const height = this.type === 'square' ?
+        //                width : Math.abs(this.corner1.y - this.corner2.y)
+        let left,top,width,height;
+        let minX = Math.min(this.corner1.x, this.corner2.x)
+        let minY = Math.min(this.corner1.y, this.corner2.y)
+        top = minY + center.y
+        if (this.size) {
+            left = center.x - this.size.width / 2
+       
+            width = this.size.width
+            height = this.size.height
+        } else {
+            width = Math.abs(this.corner1.x - this.corner2.x)
+            height = this.type === 'square' ? width : (Math.abs(this.corner1.y - this.corner2.y))
+            left = minX + center.x
+        }
+        ctx.rect(left,top,width,height)
+
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx, minX,minY,width,height,this.options.strokeWidth)
+        if (this.selected) this.drawGizmo(ctx, left,top,width,height,this.options.strokeWidth)
     }
     drawGizmo(ctx, minX,minY, width, height,pad) {
         const center = this.center;
         const points = this.getPoints();
         ctx.save()
         ctx.beginPath()
-        ctx.rect(minX + center.x - pad,
-                minY + center.y - pad, 
+        ctx.rect(minX  - pad,
+                minY  - pad, 
                 width + pad * 2,
-                this.type === 'square' ? width + pad * 2  : height + pad * 2)
+                height + pad * 2)
         ctx.strokeStyle = 'red'
         ctx.lineWidth = 3
         ctx.setLineDash([pad,5])
