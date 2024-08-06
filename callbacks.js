@@ -15,7 +15,19 @@ const downCBforSelect = function(e) { //handles user selection
   drawProperShapes(shapes)
 
 if (selectedShape) {
+    if (selectedShape instanceof Triangle) {
+      heightInput.disabled = true
+      heightInputLabel.style.textDecoration = 'line-through'
+      heightInputLabel.style.color = 'red'
+      widthInputLabel.textContent = 'Scale Width'
+    } else {
+      heightInput.disabled = false
+      widthInputLabel.textContent = 'Width'
+      heightInputLabel.style.textDecoration = 'none'
+      heightInputLabel.style.color = 'unset'
+    }
 
+    
   properties.style.display = 'unset'
   selectedShape.selected = true
   const oldCenter = selectedShape.center
@@ -48,6 +60,7 @@ if (selectedShape) {
 
 const downCBforCircles =  function(e) { 
 deselectAll()
+
 window.onkeydown = ''
 const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Circle(mousePos, getOptions())

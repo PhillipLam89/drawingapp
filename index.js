@@ -21,8 +21,9 @@ clearAndRedrawCanvas()
 helperCtx.fillStyle = 'red'
 helperCtx.fillRect(0,0 ,canvasProperties.width / 2, canvasProperties.height / 2)
 
-const shapes = []
 
+
+const shapes = []
 let currentShape = null
 
 
@@ -67,6 +68,8 @@ function drawProperShapes(shapes) {
 }
 function changeTools(tool) {
     deselectAll()
+   
+
     properties.style.display = 'none'
     const shapeTypes = {
         select: downCBforSelect,
