@@ -63,17 +63,16 @@ class Rect extends Shape {
         let left,top,width,height;
         let minX = Math.min(this.corner1.x, this.corner2.x)
         let minY = Math.min(this.corner1.y, this.corner2.y)
+        top = minY + center.y
         if (this.size) {
             left = center.x - this.size.width / 2
-            top = center.y - this.size.height / 2
+       
             width = this.size.width
             height = this.size.height
         } else {
             width = Math.abs(this.corner1.x - this.corner2.x)
             height = this.type === 'square' ? width : (Math.abs(this.corner1.y - this.corner2.y))
             left = minX + center.x
-            top = minY + center.y
-
         }
         ctx.rect(left,top,width,height)
 
