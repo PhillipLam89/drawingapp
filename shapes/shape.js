@@ -68,13 +68,13 @@ function getSize(allPoints, type) {
 
     if (type === 'square' || type === 'circle') {
         return {
-            width: (maxX-minX),
-            height: (maxX-minX)
+            width: ~~(maxX-minX),
+            height: ~~(maxX-minX)
         }
     }
 
     return {
-        width: (maxX-minX),
-        height: (maxY-minY)
+        width: ~~(maxX-minX),
+        height: ~~(maxY-minY)
     }
 }
