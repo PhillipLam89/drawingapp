@@ -41,6 +41,15 @@ class Circle extends Shape {
 
         ctx.restore()
     }
+    setWidth(width) {
+        const size = getSize(this.getPoints())
+        const ratio = width / size.width
+
+        for (const point of this.getPoints()) {
+            point.x *= ratio
+        }
+        this.size.width = width
+     }
     draw(ctx) {
        
         const center = this.center 

@@ -15,15 +15,15 @@ const downCBforSelect = function(e) { //handles user selection
   drawProperShapes(shapes)
 
 if (selectedShape) {
-    if (selectedShape instanceof Triangle) {
+    if (selectedShape instanceof Triangle || selectedShape instanceof Circle) {
       heightInput.disabled = true
       heightInputLabel.style.textDecoration = 'line-through'
       heightInputLabel.style.color = 'red'
-      widthInputLabel.textContent = 'Scale Width'
+      widthInputLabel.textContent = `Scale ${selectedShape instanceof Triangle ? 'Width' : 'Radius'}`
     } else {
       heightInput.disabled = false
       widthInputLabel.textContent = 'Width'
-      heightInputLabel.style.textDecoration = 'none'
+      heightInputLabel.style.textDecoration = 'unset'
       heightInputLabel.style.color = 'unset'
     }
 
