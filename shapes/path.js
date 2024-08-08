@@ -5,6 +5,7 @@ class Path extends Shape {
     }
     static load(data) {
         const path = new Path()
+        path.idArr = data.idArr
         path.id = data.id
         path.type = 'path'
         path.options = data.options
@@ -17,6 +18,7 @@ class Path extends Shape {
     serialize() {
         return {
             type: 'path',
+            idArr: this.idArr,
             id: this.id,
             options: this.options,
             center: this.center,

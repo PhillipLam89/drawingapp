@@ -9,14 +9,13 @@ const downCBforSelect = function(e) { //handles user selection
                   getImageData(startPos.x, startPos.y, 1,1).data
 
   const id = ''+r+g+b  
-  console.log(id)
+
   const selectedShape = shapes.find(shape => shape.id == id)
    shapes.forEach(s => s.selected = false)
   drawProperShapes(shapes)
 
 if (selectedShape) {
-   
-   
+
     updateStylesDisplay(selectedShape)
 
 
