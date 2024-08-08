@@ -28,19 +28,7 @@ class Circle extends Shape {
         ctx.arc(startX + center.x, startY + center.y, rad, 0, 2* Math.PI,true);  
         super.applyHitRegionStyles(ctx)      
     }
-    drawGizmo(ctx, diameter, startX, startY, pad) {       
-        const center = this.center;
-        ctx.save()
-        
-        ctx.lineWidth = 4
-        ctx.beginPath()
-        ctx.rect(startX - pad + center.x , startY + center.y - pad, diameter + pad * 2 , diameter + pad * 2)
-        ctx.strokeStyle = 'red' 
-        ctx.setLineDash([pad,5])
-        ctx.stroke()
 
-        ctx.restore()
-    }
     setWidth(width) {
         const size = getSize(this.getPoints())
         const ratio = width / size.width
@@ -61,8 +49,31 @@ class Circle extends Shape {
         ctx.strokeStyle = this.options.strokeColor
                 //(x,y,radius,startAngle, endAngle)
         // ctx.arc(startX, startY, rad, Math.PI/2, 1.5* Math.PI,true);
-        ctx.arc(startX + center.x, startY + center.y, rad, 0, 2* Math.PI,true);        
+        ctx.arc(startX + center.x, startY + center.y, rad, 0, 2* Math.PI,true)
+        const collisionObj = {
+            x: startX + center.x - rad + this.options.strokeWidth,
+            y: startY + center.y - rad - this.options.strokeWidth,
+            w: rad * 2,
+            h: rad * 2
+        }    
+        this.collisionObj = collisionObj
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx, rad*2, startX - rad, startY-rad, this.options.strokeWidth)
+        if (this.selected) {
+            this.drawGizmo(ctx, rad*2, startX - rad, startY-rad, this.options.strokeWidth)
+            super.handleCollisions(ctx, collisionObj)
+        }
+    }
+    drawGizmo(ctx, diameter, startX, startY, pad) {       
+        const center = this.center;
+        ctx.save()
+        
+        ctx.lineWidth = 4
+        ctx.beginPath()
+        ctx.rect(startX - pad + center.x , startY + center.y - pad, diameter + pad * 2 , diameter + pad * 2)
+        ctx.strokeStyle = 'red' 
+        ctx.setLineDash([pad,5])
+        ctx.stroke()
+
+        ctx.restore()
     }
 }

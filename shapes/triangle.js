@@ -35,26 +35,7 @@ class Triangle extends Shape {
         ctx.lineTo(this.corner1.x + center.x , y + center.y)
         super.applyHitRegionStyles(ctx)     
     }
-    drawGizmo(ctx, startX, width, height, startY, newY,pad) {
-        const center = this.center;
-       
-        ctx.save()  
 
-        ctx.lineWidth = 3
-        ctx.beginPath()
-        const isDownwards = newY > this.corner1.y
-
-        ctx.rect(startX + center.x, 
-                startY  - (isDownwards ? 0 : height)  + center.y,
-                width + pad * 2 ,
-                height + pad * 2)
-        ctx.strokeStyle = 'red' 
-        ctx.setLineDash([pad,5])
-        ctx.stroke()
-        
-        ctx.restore()
-
-    }
     setWidth(width) {
         const size = getSize(this.getPoints())
         const ratio = width / size.width
@@ -83,7 +64,38 @@ class Triangle extends Shape {
                   newY < y ? (y - height + center.y) : (y+height + center.y) 
                   )
         ctx.lineTo(this.corner1.x + center.x , y + center.y)
+        const isDownwards = newY > this.corner1.y
+        const collisionObj = {
+            x:  minX - pad + center.x,
+            y:  (y-pad) - (isDownwards ? 0 : height)  + center.y,
+            w: width,
+            h: height
+        }
+        this.collisionObj = collisionObj
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )       
+        if (this.selected) {
+            this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )
+            super.handleCollisions(ctx, collisionObj)
+        }       
+    }
+    drawGizmo(ctx, startX, width, height, startY, newY,pad) {
+        const center = this.center;
+       
+        ctx.save()  
+
+        ctx.lineWidth = 3
+        ctx.beginPath()
+        const isDownwards = newY > this.corner1.y
+
+        ctx.rect(startX + center.x, 
+                startY  - (isDownwards ? 0 : height)  + center.y,
+                width + pad * 2 ,
+                height + pad * 2)
+        ctx.strokeStyle = 'red' 
+        ctx.setLineDash([pad,5])
+        ctx.stroke()
+        
+        ctx.restore()
+
     }
 }
