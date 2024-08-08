@@ -1,30 +1,49 @@
 class Rect extends Shape {
     constructor(corner1, type,options) {
         super(options)
-        this.corner1 =  corner1
+        this.corner1 = corner1
         this.corner2 = corner1
         this.type = type
     }
-    load(data) {
-        this.id = data.id
-        this.options = data.options
-        this.center  = Vector.load(data.center)
+    static load(data) {
+       
+        const rect = new Rect()
+        rect.type = 'rect'
+        rect.idArr = data.idArr
+        rect.id = data.id
+        rect.options = data.options
+        rect.center  = Vector.load(data.center)
+        rect.size = data.size
+       
+        return rect
     }
     serialize() {
+       
         return {
-            type: 'rect',
+            type: "rect",
+            idArr: this.idArr,
             id: this.id,
             options: this.options,
             center: this.center,
             size: this.size,
-            selected: this.selected
+            selected: this.selected,
+
         }
     }
     setCorner2(corner2) {
         this.corner2 = corner2
     }
     getPoints() {
-        return [this.corner1, this.corner2];
+        if (this.size) {
+           return [
+              new Vector(-this.size.width / 2, -this.size.height / 2),
+              new Vector(-this.size.width / 2, this.size.height / 2),
+              new Vector(this.size.width / 2, this.size.height / 2),
+              new Vector(this.size.width / 2, -this.size.height / 2),
+           ];
+        } else {
+           return [this.corner1, this.corner2];
+        }
      }
      
      setPoints(points) {
@@ -43,14 +62,15 @@ class Rect extends Shape {
         ctx.beginPath()
         const center=this.center
         let left,top,width,height;
-        let minX = Math.min(this.corner1.x, this.corner2.x)
-        let minY = Math.min(this.corner1.y, this.corner2.y)
+ 
         if (this.size) {
             left = center.x - this.size.width / 2
             top = center.y - this.size.height / 2
             width = this.size.width
             height = this.size.height
         } else {
+            const minX = Math.min(this.corner1.x, this.corner2.x)
+            const minY = Math.min(this.corner1.y, this.corner2.y)
             width = Math.abs(this.corner1.x - this.corner2.x)
             height = this.type === 'square' ? width :  Math.abs(this.corner1.y - this.corner2.y)
             left = minX + center.x
@@ -64,8 +84,8 @@ class Rect extends Shape {
         const center=this.center
 
         let left,top,width,height;
-        let minX = Math.min(this.corner1.x, this.corner2.x)
-        let minY = Math.min(this.corner1.y, this.corner2.y)
+        let minX = Math.min(this.corner1?.x, this.corner2?.x) || this.size.width
+        let minY = Math.min(this.corner1?.y, this.corner2?.y) || this.size.height
         top = minY + center.y
         if (this.size) {
             left = center.x - this.size.width / 2

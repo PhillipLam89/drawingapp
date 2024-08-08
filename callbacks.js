@@ -1,5 +1,5 @@
 const downCBforSelect = function(e) { //handles user selection
-    
+   
   const aShapeIsSelected = shapes.some(s => s.selected)
   if (aShapeIsSelected) properties.style.display = 'none'
   
@@ -9,21 +9,16 @@ const downCBforSelect = function(e) { //handles user selection
                   getImageData(startPos.x, startPos.y, 1,1).data
 
   const id = ''+r+g+b  
-
+  console.log(id)
   const selectedShape = shapes.find(shape => shape.id == id)
    shapes.forEach(s => s.selected = false)
   drawProperShapes(shapes)
 
 if (selectedShape) {
-    
+   
    
     updateStylesDisplay(selectedShape)
 
-    // shapes.forEach(shape => {
-    //   if (checkCollision(shape, selectedShape)) {
-    //     console.log('crash!')
-    //   }
-    // })
 
     if (selectedShape instanceof Triangle || selectedShape instanceof Circle) {
       heightInput.disabled = true
@@ -54,7 +49,7 @@ if (selectedShape) {
   const upCallback = function(e) {
     myCanvas.onpointermove = ''
     myCanvas.onpointerup = upCallback
-    console.log(selectedShape.collisionObj)
+
     window.onkeydown = ({key}) => {
       if (key === 'Delete') {
           const index = shapes.findIndex(shape => shape.selected)
@@ -111,6 +106,7 @@ window.onkeydown = ''
   const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Rect(mousePos, type, getOptions())
 
+  currentShape.corner1 = mousePos
   currentShape.startPos = mousePos
 
 const moveCallBack = function(e) {
