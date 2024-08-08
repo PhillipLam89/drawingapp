@@ -49,6 +49,7 @@ class Circle extends Shape {
             point.x *= ratio
         }
         this.size.width = width
+        heightInput.value = this.size.width
      }
     draw(ctx) {
        

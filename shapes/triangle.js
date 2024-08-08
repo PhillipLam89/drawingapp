@@ -63,6 +63,9 @@ class Triangle extends Shape {
             point.x *= ratio
         }
         this.size.width = width
+
+         const height = this.size.width* Math.cos(Math.PI / 6)
+         heightInput.value = ~~height
      }
 
     draw(ctx, type = null) {

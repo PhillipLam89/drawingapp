@@ -7,6 +7,7 @@ class Shape {
         this.id = this.idArr.join('')
         this.center = {x:0,y:0}
         this.size = null
+        this.zIndex = 0
     }
     setCenter(center) {
         this.center = center
@@ -21,6 +22,19 @@ class Shape {
            point.y = newPoint.y
         }
         this.setPoints(points)
+     }
+     handleCollisions(ctx,collisionObj) {
+        if (this.selected) {
+           
+            for (let i = 0; i < shapes.length; i++) {
+                if (shapes[i].zIndex === this.zIndex) {
+                    continue
+                }      
+                if (checkCollision(this.collisionObj, shapes[i].collisionObj)) {
+                    return
+            }
+         }
+       } 
      }
     applyHitRegionStyles(ctx) {
         const [red,green,blue] = this.idArr
