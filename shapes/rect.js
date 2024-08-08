@@ -8,26 +8,29 @@ class Rect extends Shape {
     static load(data) {
        
         const rect = new Rect()
-        rect.type = 'rect'
+        rect.type = data.type
+  
         rect.idArr = data.idArr
         rect.id = data.id
         rect.options = data.options
         rect.center  = Vector.load(data.center)
         rect.size = data.size
-       
+       rect.corner1 = data.corner1
+       rect.corner2 = data.corner2
         return rect
     }
     serialize() {
        
         return {
-            type: "rect",
+            type: this.type,
             idArr: this.idArr,
             id: this.id,
             options: this.options,
             center: new Vector(this.center.x, this.center.y),
             size: this.size,
             selected: this.selected,
-
+            corner1: this.getPoints()[0],
+            corner2: this.getPoints()[1],
         }
     }
     setCorner2(corner2) {

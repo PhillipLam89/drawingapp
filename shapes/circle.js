@@ -5,7 +5,35 @@ class Circle extends Shape {
         this.corner2 = corner1   
         this.type ='circle'
     }
+    static load(data) {
+       
+        const circle = new Circle()
+        circle.type = 'circle'
+        circle.idArr = data.idArr
+        circle.id = data.id
+        circle.options = data.options
+        circle.center  = Vector.load(data.center)
+        circle.size = data.size
+        circle.corner1 = data.corner1
+        circle.corner2 = data.corner2
+       
+        return circle
+    }
+    serialize() {
+       
+        return {
+            type: "circle",
+            corner1: this.getPoints()[0],
+            corner2: this.getPoints()[1],
+            idArr: this.idArr,
+            id: this.id,
+            options: this.options,
+            center: new Vector(this.center.x, this.center.y),
+            size: this.size,
+            selected: this.selected,
 
+        }
+    }
     setCorner2(corner2) {
         this.corner2 = corner2
     }

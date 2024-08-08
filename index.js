@@ -136,24 +136,10 @@ function updateProperties(selectedShape) {
         properties.innerHTML = ''
         return
     }
-    // const allPoints = [...selectedShape.points]
-
-    // const minX = Math.min(...allPoints.map(p=>p.x))
-    // const minY = Math.min(...allPoints.map(p=>p.y))
-    // const maxX = Math.max(...allPoints.map(p=>p.x))
-    // const maxY = Math.max(...allPoints.map(p=>p.y))
-
-  
-    // const width = maxX - minX
-    // const height = maxY - minY
-
-    // widthInput.value = ~~width
-    // heightInput.value = ~~height
 
     centerXInput.value = ~~selectedShape.center.x
     centerYInput.value = ~~selectedShape.center.y
 
-    
     widthInput.value = selectedShape.size.width
     heightInput.value = selectedShape.size.height
 }
@@ -184,7 +170,7 @@ function save() {
     const anchor = document.createElement('a')
     const file = new Blob([data], {type: 'application/json'})
     anchor.href = URL.createObjectURL(file)
-    anchor.download = 'myDrawing.json'
+    anchor.download = 'aaaaa.json'
     anchor.click()
 }
 
@@ -205,11 +191,23 @@ function load() {
                     case 'rect':
                         shape = Rect.load(shapeData)
                         break;
+                    case 'square':
+                        shape = Rect.load(shapeData)
+                        break;                        
                     case 'path':
                         shape = Path.load(shapeData)
                         break;
+                    case 'circle':
+                            shape = Circle.load(shapeData)
+                            break;     
+                    case 'rightTriangle':
+                        shape = Triangle.load(shapeData)
+                        break;     
+                    case 'equilateralTriangle':
+                        shape = Triangle.load(shapeData)
+                        break;                                                                        
                 }
-               
+                shape.zIndex = shapes.length
                 shapes.push(shape)
             }
             drawProperShapes(shapes)

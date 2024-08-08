@@ -15,7 +15,7 @@ const downCBforSelect = function(e) { //handles user selection
   drawProperShapes(shapes)
 
 if (selectedShape) {
-
+    console.log(selectedShape)
     updateStylesDisplay(selectedShape)
 
 
@@ -102,6 +102,8 @@ window.onkeydown = ''
   const type =
   [...document.querySelectorAll('option')]
     .find(attr => attr.selected).value
+
+    console.log(type)
   const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Rect(mousePos, type, getOptions())
 
@@ -171,7 +173,7 @@ window.onkeydown = ''
   const type =
     [...document.querySelectorAll('option')]
       .find(attr => attr.selected).value
-
+   console.log(type)
       const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Triangle(mousePos, type, getOptions())
   currentShape.startPos = mousePos
