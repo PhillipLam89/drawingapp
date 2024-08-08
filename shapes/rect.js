@@ -24,7 +24,7 @@ class Rect extends Shape {
             idArr: this.idArr,
             id: this.id,
             options: this.options,
-            center: this.center,
+            center: new Vector(this.center.x, this.center.y),
             size: this.size,
             selected: this.selected,
 
@@ -61,20 +61,20 @@ class Rect extends Shape {
 
         ctx.beginPath()
         const center=this.center
+
         let left,top,width,height;
- 
+        let minX = Math.min(this.corner1?.x, this.corner2?.x) || this.size.width
+        let minY = Math.min(this.corner1?.y, this.corner2?.y) || this.size.height
+        top = minY + center.y
         if (this.size) {
             left = center.x - this.size.width / 2
-            top = center.y - this.size.height / 2
+       
             width = this.size.width
             height = this.size.height
         } else {
-            const minX = Math.min(this.corner1.x, this.corner2.x)
-            const minY = Math.min(this.corner1.y, this.corner2.y)
             width = Math.abs(this.corner1.x - this.corner2.x)
-            height = this.type === 'square' ? width :  Math.abs(this.corner1.y - this.corner2.y)
+            height = this.type === 'square' ? width : (Math.abs(this.corner1.y - this.corner2.y))
             left = minX + center.x
-            top = minY + center.y
         }
         ctx.rect(left,top,width,height)
         super.applyHitRegionStyles(ctx) 
