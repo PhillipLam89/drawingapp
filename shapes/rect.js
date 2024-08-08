@@ -5,7 +5,21 @@ class Rect extends Shape {
         this.corner2 = corner1
         this.type = type
     }
-
+    load(data) {
+        this.id = data.id
+        this.options = data.options
+        this.center  = Vector.load(data.center)
+    }
+    serialize() {
+        return {
+            type: 'rect',
+            id: this.id,
+            options: this.options,
+            center: this.center,
+            size: this.size,
+            selected: this.selected
+        }
+    }
     setCorner2(corner2) {
         this.corner2 = corner2
     }
@@ -25,14 +39,7 @@ class Rect extends Shape {
         this.size.height = height
      }
     drawHitRegion(ctx) {
-        // ctx.beginPath()
-        // const center=this.center
-        // const minX = Math.min(this.corner1.x, this.corner2.x)
-        // const minY = Math.min(this.corner1.y, this.corner2.y)
-        // const width = Math.abs(this.corner1.x - this.corner2.x)
-        // const height = this.type === 'square' ?
-        //                width : Math.abs(this.corner1.y - this.corner2.y)
-        //                ctx.rect(minX + center.x,minY + center.y,width, height)
+
         ctx.beginPath()
         const center=this.center
         let left,top,width,height;
@@ -55,11 +62,7 @@ class Rect extends Shape {
     draw(ctx) {
         ctx.beginPath()
         const center=this.center
-        // const minX = Math.min(this.corner1.x, this.corner2.x)
-        // const minY = Math.min(this.corner1.y, this.corner2.y)
-        // const width = Math.abs(this.corner1.x - this.corner2.x)
-        // const height = this.type === 'square' ?
-        //                width : Math.abs(this.corner1.y - this.corner2.y)
+
         let left,top,width,height;
         let minX = Math.min(this.corner1.x, this.corner2.x)
         let minY = Math.min(this.corner1.y, this.corner2.y)
@@ -75,9 +78,18 @@ class Rect extends Shape {
             left = minX + center.x
         }
         ctx.rect(left,top,width,height)
-
+        const collisionObj = {
+            x: left,
+            y:top,
+            w:width,
+            h:height
+        }
+        this.collisionObj = collisionObj
         super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx, left,top,width,height,this.options.strokeWidth)
+        if (this.selected) {
+            this.drawGizmo(ctx, left,top,width,height,this.options.strokeWidth)
+            super.handleCollisions(ctx,collisionObj)
+        }
     }
     drawGizmo(ctx, minX,minY, width, height,pad) {
         const center = this.center;

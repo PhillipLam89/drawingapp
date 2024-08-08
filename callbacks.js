@@ -15,11 +15,22 @@ const downCBforSelect = function(e) { //handles user selection
   drawProperShapes(shapes)
 
 if (selectedShape) {
+    
+   
+    updateStylesDisplay(selectedShape)
+
+    // shapes.forEach(shape => {
+    //   if (checkCollision(shape, selectedShape)) {
+    //     console.log('crash!')
+    //   }
+    // })
+
     if (selectedShape instanceof Triangle || selectedShape instanceof Circle) {
       heightInput.disabled = true
       heightInputLabel.style.textDecoration = 'line-through'
       heightInputLabel.style.color = 'red'
       widthInputLabel.textContent = `Scale ${selectedShape instanceof Triangle ? 'Width' : 'Radius'}`
+    
     } else {
       heightInput.disabled = false
       widthInputLabel.textContent = 'Width'
@@ -43,7 +54,7 @@ if (selectedShape) {
   const upCallback = function(e) {
     myCanvas.onpointermove = ''
     myCanvas.onpointerup = upCallback
-
+    console.log(selectedShape.collisionObj)
     window.onkeydown = ({key}) => {
       if (key === 'Delete') {
           const index = shapes.findIndex(shape => shape.selected)
@@ -65,6 +76,7 @@ window.onkeydown = ''
 const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Circle(mousePos, getOptions())
 
+  currentShape.startPos = mousePos
 
 const moveCallBack = function(e) {
   const mousePos = new Vector(e.offsetX, e.offsetY)
@@ -80,6 +92,7 @@ const upCallBack = function(e) {
    // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
    // myCanvas.removeEventListener('pointerup', upCallBack)
    currentShape.recenter()
+   currentShape.zIndex = shapes.length
    shapes.push(currentShape)
 
 }
@@ -98,7 +111,7 @@ window.onkeydown = ''
   const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Rect(mousePos, type, getOptions())
 
-
+  currentShape.startPos = mousePos
 
 const moveCallBack = function(e) {
 
@@ -116,6 +129,7 @@ const upCallBack = function(e) {
    // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
    // myCanvas.removeEventListener('pointerup', upCallBack)
   currentShape.recenter()
+  currentShape.zIndex = shapes.length
    shapes.push(currentShape)
 
 }
@@ -131,14 +145,16 @@ deselectAll()
 window.onkeydown = ''
  const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Path(mousePos, getOptions())
-  
+  currentShape.startPos = mousePos
+  currentShape.zIndex = shapes.length
   const moveCallBack = function(e) {
     const mousePos = new Vector(e.offsetX, e.offsetY)
       currentShape.addPoint(mousePos)
   
       // clearAndRedrawCanvas()
+      
       drawProperShapes([...shapes, currentShape])
-  
+    
   }
 
   const upCallBack = function(e) {
@@ -146,6 +162,7 @@ window.onkeydown = ''
       myCanvas.onpointerup = 'die'
       
       currentShape.recenter()
+      currentShape.zIndex = shapes.length
       shapes.push(currentShape)
   }
 myCanvas.onpointermove = moveCallBack
@@ -162,7 +179,7 @@ window.onkeydown = ''
 
       const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Triangle(mousePos, type, getOptions())
-
+  currentShape.startPos = mousePos
 
 const moveCallBack = function(e) {
   const mousePos = new Vector(e.offsetX, e.offsetY)
@@ -179,6 +196,7 @@ const upCallBack = function(e) {
    // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
    // myCanvas.removeEventListener('pointerup', upCallBack)
    currentShape.recenter()
+   currentShape.zIndex = shapes.length
    shapes.push(currentShape)
 
 }

@@ -21,3 +21,8 @@ body {
 #properties {
     display: none;
 }
+#saveLoadContainer {
+    position: absolute;
+    top: 2vw;
+    right:3vw;
+}

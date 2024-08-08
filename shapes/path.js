@@ -51,21 +51,33 @@ class Path extends Shape {
             ctx.lineTo(this.points[i].x + center.x, this.points[i].y + center.y);
         }       
  
-     super.handleOptions(ctx)
-     if (this.selected) this.drawGizmo(ctx)
-    }
-    drawGizmo(ctx) {
-     
-        const center = this.center;
         const minX = Math.min(...this.points.map(p=>p.x))
         const minY = Math.min(...this.points.map(p=>p.y))
         const maxX = Math.max(...this.points.map(p=>p.x))
         const maxY = Math.max(...this.points.map(p=>p.y))
-
+        const collisionObj = {
+            x:minX + center.x - this.options.strokeWidth,
+            y:minY + center.y - this.options.strokeWidth,
+            w:maxX-minX + this.options.strokeWidth * 2,
+            h:maxY - minY+ this.options.strokeWidth * 2
+        }
+        this.collisionObj = collisionObj
+       
+     super.handleOptions(ctx)
+     if (this.selected) {
+        this.drawGizmo(ctx, collisionObj)
+        super.handleCollisions(ctx,collisionObj)
+   } 
+ }
+    drawGizmo(ctx, collisionObj) {
+     
+        const center = this.center;
+    
         ctx.save()
         ctx.beginPath()
         
-        ctx.rect(minX + center.x - this.options.strokeWidth,minY + center.y - this.options.strokeWidth, maxX-minX + this.options.strokeWidth * 2, maxY - minY+ this.options.strokeWidth * 2)
+        ctx.rect(collisionObj.x,collisionObj.y,collisionObj.w,collisionObj.h)
+
         ctx.strokeStyle = 'red'
         ctx.lineWidth = 3
         ctx.setLineDash([this.options.strokeWidth,5])

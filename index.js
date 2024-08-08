@@ -120,8 +120,11 @@ function changeX(value) {
 function changeY(value) {
 
     shapes.filter(s => s.selected).forEach(s => {
-        (s.center.y = Number(value))
       
+     
+   
+        (s.center.y = Number(value))
+       
     })
 
     drawProperShapes(shapes)
@@ -166,3 +169,34 @@ function changeHeight(value) {
     shape.setHeight(Number(value))
     drawProperShapes(shapes)
    }
+
+function updateStylesDisplay(selectedShape) {
+    fillColor.value = selectedShape.options.fillColor
+    fill.checked = selectedShape.options.fill
+    strokeColor.value = selectedShape.options.strokeColor
+    stroke.checked = selectedShape.options.stroke
+    strokeWidth.value = selectedShape.options.strokeWidth
+}
+
+function save() {
+
+}
+
+function load() {
+
+}
+
+function checkCollision(rect1, rect2) {
+    if (
+        rect1.x < rect2.x + rect2.w &&
+        rect1.x + rect1.w > rect2.x &&
+        rect1.y < rect2.y + rect2.h &&
+        rect1.y + rect1.h > rect2.y
+      ) {
+        myCanvas.style.border = '15px solid red'
+        return true
+      }
+
+      myCanvas.style.border = '15px solid blue'
+    return false
+}

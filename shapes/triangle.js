@@ -35,6 +35,49 @@ class Triangle extends Shape {
         ctx.lineTo(this.corner1.x + center.x , y + center.y)
         super.applyHitRegionStyles(ctx)     
     }
+
+    setWidth(width) {
+        const size = getSize(this.getPoints())
+        const ratio = width / size.width
+
+        for (const point of this.getPoints()) {
+            point.x *= ratio
+        }
+        this.size.width = width
+
+         const height = this.size.width* Math.cos(Math.PI / 6)
+         heightInput.value = ~~height
+     }
+
+    draw(ctx, type = null) {
+        const center = this.center
+        const pad = this.options.strokeWidth
+        ctx.beginPath()
+        const minX = Math.min(this.corner1.x, this.corner2.x)
+        const y = this.corner1.y
+        const newY = this.corner2.y
+        const width = Math.abs(this.corner1.x - this.corner2.x)
+        ctx.moveTo(this.corner1.x + center.x, y + center.y)
+        ctx.lineTo(this.corner2.x + center.x,y + center.y)
+        const height = width * Math.cos(Math.PI / 6)
+        ctx.lineTo(center.x + minX + (this.type ==='rightTriangle' ? 0 : width / 2 ),
+                  newY < y ? (y - height + center.y) : (y+height + center.y) 
+                  )
+        ctx.lineTo(this.corner1.x + center.x , y + center.y)
+        const isDownwards = newY > this.corner1.y
+        const collisionObj = {
+            x:  minX - pad + center.x,
+            y:  (y-pad) - (isDownwards ? 0 : height)  + center.y,
+            w: width,
+            h: height
+        }
+        this.collisionObj = collisionObj
+        super.handleOptions(ctx)
+        if (this.selected) {
+            this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )
+            super.handleCollisions(ctx, collisionObj)
+        }       
+    }
     drawGizmo(ctx, startX, width, height, startY, newY,pad) {
         const center = this.center;
        
@@ -54,33 +97,5 @@ class Triangle extends Shape {
         
         ctx.restore()
 
-    }
-    setWidth(width) {
-        const size = getSize(this.getPoints())
-        const ratio = width / size.width
-
-        for (const point of this.getPoints()) {
-            point.x *= ratio
-        }
-        this.size.width = width
-     }
-
-    draw(ctx, type = null) {
-        const center = this.center
-        const pad = this.options.strokeWidth
-        ctx.beginPath()
-        const minX = Math.min(this.corner1.x, this.corner2.x)
-        const y = this.corner1.y
-        const newY = this.corner2.y
-        const width = Math.abs(this.corner1.x - this.corner2.x)
-        ctx.moveTo(this.corner1.x + center.x, y + center.y)
-        ctx.lineTo(this.corner2.x + center.x,y + center.y)
-        const height = width * Math.cos(Math.PI / 6)
-        ctx.lineTo(center.x + minX + (this.type ==='rightTriangle' ? 0 : width / 2 ),
-                  newY < y ? (y - height + center.y) : (y+height + center.y) 
-                  )
-        ctx.lineTo(this.corner1.x + center.x , y + center.y)
-        super.handleOptions(ctx)
-        if (this.selected) this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )       
     }
 }
