@@ -38,7 +38,7 @@ class Shape {
      }
     applyHitRegionStyles(ctx) {
         const [red,green,blue] = this.idArr
-
+   
         ctx.fillStyle = `rgb(${red},${green},${blue})`
         ctx.strokeStyle = `rgb(${red},${green},${blue})`
         ctx.lineWidth = this.options.strokeWidth + 5

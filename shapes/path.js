@@ -3,6 +3,30 @@ class Path extends Shape {
         super(options) //can be put on parent class since all shapes use options from color picker
         this.points = new Array(startPoint)
     }
+    static load(data) {
+        const path = new Path()
+        path.idArr = data.idArr
+        path.id = data.id
+        path.type = 'path'
+        path.options = data.options
+        path.center  = Vector.load(data.center)
+        path.size = data.size
+        path.selected = data.selected
+        path.points = data.points.map(p => Vector.load(p))
+        return path
+    }
+    serialize() {
+        return {
+            type: 'path',
+            idArr: this.idArr,
+            id: this.id,
+            options: this.options,
+            center: this.center,
+            size: this.size,
+            selected: this.selected,
+            points: this.points
+        }
+    }
     addPoint(point) {
         this.points.push(point)
     }

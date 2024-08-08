@@ -5,7 +5,33 @@ class Triangle extends Shape {
         this.corner2 = {}
         this.type = type
     }
-
+    static load(data) {
+       
+        const triangle = new Triangle()
+        triangle.type = data.type
+        triangle.idArr = data.idArr
+        triangle.id = data.id
+        triangle.options = data.options
+        triangle.center  = Vector.load(data.center)
+        triangle.size = data.size
+       triangle.corner1 = data.corner1
+       triangle.corner2 = data.corner2
+        return triangle
+    }
+    serialize() {
+       
+        return {
+            type: this.type,
+            idArr: this.idArr,
+            id: this.id,
+            options: this.options,
+            center: new Vector(this.center.x, this.center.y),
+            size: this.size,
+            selected: this.selected,
+            corner1: this.getPoints()[0],
+            corner2: this.getPoints()[1],
+        }
+    }
     setCorner2(corner2) {
         this.corner2 = corner2
     }

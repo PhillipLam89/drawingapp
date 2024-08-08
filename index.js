@@ -23,7 +23,7 @@ helperCtx.fillRect(0,0 ,canvasProperties.width / 2, canvasProperties.height / 2)
 
 
 
-const shapes = []
+let shapes = []
 let currentShape = null
 
 
@@ -136,24 +136,10 @@ function updateProperties(selectedShape) {
         properties.innerHTML = ''
         return
     }
-    // const allPoints = [...selectedShape.points]
-
-    // const minX = Math.min(...allPoints.map(p=>p.x))
-    // const minY = Math.min(...allPoints.map(p=>p.y))
-    // const maxX = Math.max(...allPoints.map(p=>p.x))
-    // const maxY = Math.max(...allPoints.map(p=>p.y))
-
-  
-    // const width = maxX - minX
-    // const height = maxY - minY
-
-    // widthInput.value = ~~width
-    // heightInput.value = ~~height
 
     centerXInput.value = ~~selectedShape.center.x
     centerYInput.value = ~~selectedShape.center.y
 
-    
     widthInput.value = selectedShape.size.width
     heightInput.value = selectedShape.size.height
 }
@@ -179,11 +165,56 @@ function updateStylesDisplay(selectedShape) {
 }
 
 function save() {
-
+    const data = JSON.stringify(shapes.map(s => s.serialize()))
+    //force download on click
+    const anchor = document.createElement('a')
+    const file = new Blob([data], {type: 'application/json'})
+    anchor.href = URL.createObjectURL(file)
+    anchor.download = 'aaaaa.json'
+    anchor.click()
 }
 
 function load() {
-
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
+    input.onchange = (e) =>{
+        const file = e.target.files[0]
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            const data = JSON.parse(e.target.result)
+         
+            shapes = []
+            for (const shapeData of data) {
+                let shape = null
+                switch(shapeData.type) {
+                    case 'rect':
+                        shape = Rect.load(shapeData)
+                        break;
+                    case 'square':
+                        shape = Rect.load(shapeData)
+                        break;                        
+                    case 'path':
+                        shape = Path.load(shapeData)
+                        break;
+                    case 'circle':
+                            shape = Circle.load(shapeData)
+                            break;     
+                    case 'rightTriangle':
+                        shape = Triangle.load(shapeData)
+                        break;     
+                    case 'equilateralTriangle':
+                        shape = Triangle.load(shapeData)
+                        break;                                                                        
+                }
+                shape.zIndex = shapes.length
+                shapes.push(shape)
+            }
+            drawProperShapes(shapes)
+        }
+        reader.readAsText(file)
+    }
+    input.click()
 }
 
 function checkCollision(rect1, rect2) {
@@ -193,10 +224,7 @@ function checkCollision(rect1, rect2) {
         rect1.y < rect2.y + rect2.h &&
         rect1.y + rect1.h > rect2.y
       ) {
-        myCanvas.style.border = '15px solid red'
         return true
       }
-
-      myCanvas.style.border = '15px solid blue'
     return false
 }
