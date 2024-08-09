@@ -228,3 +228,23 @@ function checkCollision(rect1, rect2) {
       }
     return false
 }
+
+function createBtn(shapeObj) {
+  
+    if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
+
+    let side = null
+    const btn = document.createElement('button')
+    btn.textContent = `Bring to ${side}`
+    btn.style.position = 'absolute'
+    btn.id = 'zIndexBtn'
+    btn.style.left = shapeObj.center.x - shapeObj.size.width / 2 + 'px'
+    btn.style.top = shapeObj.center.y  + shapeObj.size.height / 2 + 'px'
+
+    console.log('create btn ran')
+    console.log(shapeObj)
+
+    console.log(btn.style.left,btn.style.left)
+    document.body.appendChild(btn)
+}
+// createBtn()
