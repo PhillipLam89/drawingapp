@@ -52,7 +52,9 @@ if (selectedShape) {
   const upCallback = function(e) {
     myCanvas.onpointermove = ''
     myCanvas.onpointerup = upCallback
-    handleSwapBtnCreation(selectedShape)
+    if (shapes.some(s => s.selected)) {
+      handleSwapBtnCreation(selectedShape)
+    }
     window.onkeydown = ({key}) => {
       if (key === 'Delete') {
           const index = shapes.findIndex(shape => shape.selected)
