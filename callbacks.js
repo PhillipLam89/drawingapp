@@ -1,5 +1,5 @@
 const downCBforSelect = function(e) { //handles user selection
-   
+  if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
   const aShapeIsSelected = shapes.some(s => s.selected)
   if (aShapeIsSelected) properties.style.display = 'none'
   
@@ -15,9 +15,10 @@ const downCBforSelect = function(e) { //handles user selection
   drawProperShapes(shapes)
 
 if (selectedShape) {
-    console.log(selectedShape)
-    updateStylesDisplay(selectedShape)
 
+    updateStylesDisplay(selectedShape)
+    if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
+    handleSwapBtnCreation(selectedShape)
 
     if (selectedShape instanceof Triangle || selectedShape instanceof Circle) {
       heightInput.disabled = true
@@ -43,6 +44,31 @@ if (selectedShape) {
        const newPoint = Vector.subtract(mousePos, startPos);
        selectedShape.setCenter(Vector.add(oldCenter, newPoint));
        drawProperShapes(shapes);
+
+       if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
+
+        handleSwapBtnCreation(selectedShape)
+        // for (let i = 0; i < shapes.length; i++) {
+        //   if (shapes[i].zIndex === selectedShape.zIndex) {
+        //       continue
+        //   }      
+        //   if (checkCollision(selectedShape.collisionObj, shapes[i].collisionObj)) {
+        //       let side = null
+        //       let smallerIndex 
+        //       let biggerIndex
+        //       if (selectedShape.zIndex < shapes[i].zIndex) {
+        //          side = 'front'
+        //          smallerIndex = selectedShape.zIndex
+        //          biggerIndex = shapes[i].zIndex
+        //       }else {
+        //         side = 'back'
+        //         smallerIndex = shapes[i].zIndex
+        //         biggerIndex =  selectedShape.zIndex
+        //       }
+        //       createBtn(selectedShape,side, {small: smallerIndex, big: biggerIndex, currentFrontShape: shapes[biggerIndex], currentBackShape: shapes[smallerIndex]})
+        //       return
+        //   }
+        // }
 }
 
   const upCallback = function(e) {
@@ -56,8 +82,9 @@ if (selectedShape) {
           drawProperShapes(shapes)
       }
   } 
-  updateProperties(selectedShape)
-  }
+
+    updateProperties(selectedShape)
+}
   myCanvas.onpointermove = moveCallback
   myCanvas.onpointerup = upCallback
   } 
@@ -103,7 +130,7 @@ window.onkeydown = ''
   [...document.querySelectorAll('option')]
     .find(attr => attr.selected).value
 
-    console.log(type)
+  
   const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Rect(mousePos, type, getOptions())
 
@@ -173,7 +200,7 @@ window.onkeydown = ''
   const type =
     [...document.querySelectorAll('option')]
       .find(attr => attr.selected).value
-   console.log(type)
+
       const mousePos = new Vector(e.offsetX, e.offsetY)
   currentShape = new Triangle(mousePos, type, getOptions())
   currentShape.startPos = mousePos

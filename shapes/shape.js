@@ -24,17 +24,10 @@ class Shape {
         this.setPoints(points)
      }
      handleCollisions(ctx,collisionObj) {
-        if (this.selected) {
+    //     if (this.selected) {
            
-            for (let i = 0; i < shapes.length; i++) {
-                if (shapes[i].zIndex === this.zIndex) {
-                    continue
-                }      
-                if (checkCollision(this.collisionObj, shapes[i].collisionObj)) {
-                    return
-            }
-         }
-       } 
+
+    //    } 
      }
     applyHitRegionStyles(ctx) {
         const [red,green,blue] = this.idArr
