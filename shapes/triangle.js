@@ -101,7 +101,7 @@ class Triangle extends Shape {
         super.handleOptions(ctx)
         if (this.selected) {
             this.drawGizmo(ctx, minX - pad, width, height, y-pad, newY, pad )
-            super.handleCollisions(ctx, collisionObj)
+          
         }       
     }
     drawGizmo(ctx, startX, width, height, startY, newY,pad) {

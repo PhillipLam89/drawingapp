@@ -88,7 +88,7 @@ class Circle extends Shape {
         super.handleOptions(ctx)
         if (this.selected) {
             this.drawGizmo(ctx, rad*2, startX - rad, startY-rad, this.options.strokeWidth)
-            super.handleCollisions(ctx, collisionObj)
+           
         }
     }
     drawGizmo(ctx, diameter, startX, startY, pad) {       

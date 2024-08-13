@@ -90,7 +90,7 @@ class Path extends Shape {
      super.handleOptions(ctx)
      if (this.selected) {
         this.drawGizmo(ctx, collisionObj)
-        super.handleCollisions(ctx,collisionObj)
+        // super.handleCollisions(ctx,collisionObj)
    } 
  }
     drawGizmo(ctx, collisionObj) {

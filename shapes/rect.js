@@ -111,7 +111,7 @@ class Rect extends Shape {
         super.handleOptions(ctx)
         if (this.selected) {
             this.drawGizmo(ctx, left,top,width,height,this.options.strokeWidth)
-            super.handleCollisions(ctx,collisionObj)
+
         }
     }
     drawGizmo(ctx, minX,minY, width, height,pad) {

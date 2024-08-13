@@ -23,12 +23,7 @@ class Shape {
         }
         this.setPoints(points)
      }
-     handleCollisions(ctx,collisionObj) {
-    //     if (this.selected) {
-           
 
-    //    } 
-     }
     applyHitRegionStyles(ctx) {
         const [red,green,blue] = this.idArr
    

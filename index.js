@@ -235,7 +235,7 @@ function createBtn(shapeObj, side, obj) {
     if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
 
     const btn = document.createElement('button')
-    btn.textContent = `Bring to ${side}`
+    btn.textContent = `Move to ${side}`
     btn.style.position = 'absolute'
     btn.id = 'zIndexBtn'
     btn.style.left = shapeObj.center.x - shapeObj.size.width / 2 + 'px'
@@ -250,7 +250,7 @@ function createBtn(shapeObj, side, obj) {
 
 function zIndexSwap(e,obj) {
     shapes.forEach(s => s.selected = false)
-    e.target.textContent = e.target.textContent == `Bring to front` ? `Bring to back` : `Bring to front`
+    e.target.textContent = e.target.textContent == `Move to front` ? `Move to back` : `Bring to front`
     const smallIndex = obj.small
     const largeIndex = obj.big
  
