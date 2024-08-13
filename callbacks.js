@@ -47,34 +47,12 @@ if (selectedShape) {
 
        if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
 
-        handleSwapBtnCreation(selectedShape)
-        // for (let i = 0; i < shapes.length; i++) {
-        //   if (shapes[i].zIndex === selectedShape.zIndex) {
-        //       continue
-        //   }      
-        //   if (checkCollision(selectedShape.collisionObj, shapes[i].collisionObj)) {
-        //       let side = null
-        //       let smallerIndex 
-        //       let biggerIndex
-        //       if (selectedShape.zIndex < shapes[i].zIndex) {
-        //          side = 'front'
-        //          smallerIndex = selectedShape.zIndex
-        //          biggerIndex = shapes[i].zIndex
-        //       }else {
-        //         side = 'back'
-        //         smallerIndex = shapes[i].zIndex
-        //         biggerIndex =  selectedShape.zIndex
-        //       }
-        //       createBtn(selectedShape,side, {small: smallerIndex, big: biggerIndex, currentFrontShape: shapes[biggerIndex], currentBackShape: shapes[smallerIndex]})
-        //       return
-        //   }
-        // }
 }
 
   const upCallback = function(e) {
     myCanvas.onpointermove = ''
     myCanvas.onpointerup = upCallback
-
+    handleSwapBtnCreation(selectedShape)
     window.onkeydown = ({key}) => {
       if (key === 'Delete') {
           const index = shapes.findIndex(shape => shape.selected)
