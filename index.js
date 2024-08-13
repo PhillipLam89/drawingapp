@@ -229,22 +229,62 @@ function checkCollision(rect1, rect2) {
     return false
 }
 
-function createBtn(shapeObj) {
+function createBtn(shapeObj, side, obj) {
+    
   
     if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
 
-    let side = null
     const btn = document.createElement('button')
     btn.textContent = `Bring to ${side}`
     btn.style.position = 'absolute'
     btn.id = 'zIndexBtn'
     btn.style.left = shapeObj.center.x - shapeObj.size.width / 2 + 'px'
     btn.style.top = shapeObj.center.y  + shapeObj.size.height / 2 + 'px'
+    btn.onclick = (e) => zIndexSwap(e,obj)
 
-    console.log('create btn ran')
-    console.log(shapeObj)
-
-    console.log(btn.style.left,btn.style.left)
+    
     document.body.appendChild(btn)
+  
 }
 // createBtn()
+
+function zIndexSwap(e,obj) {
+    shapes.forEach(s => s.selected = false)
+    e.target.textContent = e.target.textContent == `Bring to front` ? `Bring to back` : `Bring to front`
+    const smallIndex = obj.small
+    const largeIndex = obj.big
+ 
+ 
+    shapes[smallIndex] = obj.currentFrontShape
+    shapes[smallIndex].zIndex = smallIndex
+    shapes[largeIndex] = obj.currentBackShape
+    shapes[largeIndex].zIndex = largeIndex
+    drawProperShapes(shapes)
+    e.target.remove()
+
+  
+}
+
+function handleSwapBtnCreation(selectedShape) {
+    for (let i = 0; i < shapes.length; i++) {
+        if (shapes[i].zIndex === selectedShape.zIndex) {
+            continue
+        }      
+        if (checkCollision(selectedShape.collisionObj, shapes[i].collisionObj)) {
+            let side = null
+            let smallerIndex 
+            let biggerIndex
+            if (selectedShape.zIndex < shapes[i].zIndex) {
+               side = 'front'
+               smallerIndex = selectedShape.zIndex
+               biggerIndex = shapes[i].zIndex
+            }else {
+              side = 'back'
+              smallerIndex = shapes[i].zIndex
+              biggerIndex =  selectedShape.zIndex
+            }
+            createBtn(selectedShape,side, {small: smallerIndex, big: biggerIndex, currentFrontShape: shapes[biggerIndex], currentBackShape: shapes[smallerIndex]})
+            return
+        }
+      }
+}
