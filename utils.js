@@ -1,6 +1,6 @@
-function clearAndRedrawCanvas(color = 'grey') {    
+function clearAndRedrawCanvas() {    
     ctx.clearRect(0,0,myCanvas.width, myCanvas.height)
-    ctx.fillStyle = color
+    ctx.fillStyle = changeCanvasInput.value
     ctx.fillRect(0,0, myCanvas.width, myCanvas.height) //grey outside area
     const scale = 1
     const stageProperties = {
