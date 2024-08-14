@@ -5,8 +5,6 @@ const canvasProperties = {
     center: {x: innerWidth , y: innerHeight }
 }
 
-
-
 myCanvas.width = canvasProperties.width
 myCanvas.height = canvasProperties.height
 
@@ -22,12 +20,9 @@ helperCtx.fillStyle = 'red'
 helperCtx.fillRect(0,0 ,canvasProperties.width / 2, canvasProperties.height / 2)
 
 
-
 let shapes = []
 let currentShape = null
 let history = []
-
-
 
 myCanvas.onpointerdown = downCBforPaths //default starting option
 
@@ -36,8 +31,6 @@ changeCanvas.oninput = function changeCanvasBG() {
  clearAndRedrawCanvas(changeCanvasInput.value)
  drawProperShapes(shapes)
 }
-
-
 
 
 document.addEventListener('keydown', function(event) {
