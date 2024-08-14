@@ -71,35 +71,35 @@ if (selectedShape) {
 }
 
 const downCBforCircles =  function(e) { 
-deselectAll()
+  deselectAll()
 
-window.onkeydown = ''
-const mousePos = new Vector(e.offsetX, e.offsetY)
-  currentShape = new Circle(mousePos, getOptions())
-
-  currentShape.startPos = mousePos
-
-const moveCallBack = function(e) {
+  window.onkeydown = ''
   const mousePos = new Vector(e.offsetX, e.offsetY)
-  currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
+    currentShape = new Circle(mousePos, getOptions())
 
-  drawProperShapes([...shapes, currentShape])
-}
+    currentShape.startPos = mousePos
 
-const upCallBack = function(e) {
-   myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
-   myCanvas.onpointerup = 'die'
+  const moveCallBack = function(e) {
+    const mousePos = new Vector(e.offsetX, e.offsetY)
+    currentShape.setCorner2(mousePos) //this gives us the initial corner when they click and the new corner as they drag for rectangle's length
 
-   // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
-   // myCanvas.removeEventListener('pointerup', upCallBack)
-   currentShape.recenter()
-   currentShape.zIndex = shapes.length
-   shapes.push(currentShape)
+    drawProperShapes([...shapes, currentShape])
+  }
 
-}
+  const upCallBack = function(e) {
+    myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
+    myCanvas.onpointerup = 'die'
 
-myCanvas.onpointermove = moveCallBack
-myCanvas.onpointerup = upCallBack
+    // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
+    // myCanvas.removeEventListener('pointerup', upCallBack)
+    currentShape.recenter()
+    currentShape.zIndex = shapes.length
+    shapes.push(currentShape)
+
+  }
+
+  myCanvas.onpointermove = moveCallBack
+  myCanvas.onpointerup = upCallBack
 
 }
 
