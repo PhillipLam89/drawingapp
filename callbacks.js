@@ -130,15 +130,13 @@ const upCallBack = function(e) {
    myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
    myCanvas.onpointerup = 'die'
 
-   // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
-   // myCanvas.removeEventListener('pointerup', upCallBack)
+
   currentShape.recenter()
   currentShape.zIndex = shapes.length
    shapes.push(currentShape)
 
 }
-//  myCanvas.addEventListener('pointermove', moveCallBack)
-//  myCanvas.addEventListener('pointerup', upCallBack)
+
 myCanvas.onpointermove = moveCallBack
 myCanvas.onpointerup = upCallBack
 
@@ -197,15 +195,13 @@ const upCallBack = function(e) {
    myCanvas.onpointermove = 'die' //notice using .on will not let you use removeEventListener but you can set its .on property to null
    myCanvas.onpointerup = 'die'
 
-   // myCanvas.removeEventListener('pointermove', moveCallBack) //must remove these listeners so no spam lines are drawn 
-   // myCanvas.removeEventListener('pointerup', upCallBack)
+
    currentShape.recenter()
    currentShape.zIndex = shapes.length
    shapes.push(currentShape)
 
 }
-//  myCanvas.addEventListener('pointermove', moveCallBack)
-//  myCanvas.addEventListener('pointerup', upCallBack)
+
 myCanvas.onpointermove = moveCallBack
 myCanvas.onpointerup = upCallBack
 
