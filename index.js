@@ -32,6 +32,7 @@ changeCanvas.oninput = function changeCanvasBG() {
  drawProperShapes(shapes)
 }
 
+let copyOrCutHistory = []
 
 document.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === 'z') {
@@ -42,6 +43,37 @@ document.addEventListener('keydown', function(event) {
         if (history.length) {
             shapes = [...shapes, history.pop()]
         }
+    }
+    if (event.ctrlKey && event.key === 'c')  {
+            const selectedShape = shapes.find(s => s.selected)
+            if (!selectedShape) return
+
+            const types = {path: Path, square:Rect, rect: Rect, circle: Circle, equilateralTriangle: Triangle, rightTriangle: Triangle}
+
+
+            console.log(selectedShape.type)
+            const copy = new types[selectedShape.type]()
+            const keys = Object.keys(selectedShape)
+            const values = Object.values({...selectedShape})
+
+            for (let i = 0; i < keys.length; i++) {
+                copy[keys[i]] = values[i]
+            }
+            
+            copy.idArr = generateID()
+            copy.id = copy.idArr.join('')
+            copy.options =  {...selectedShape.options}
+            copy.points = selectedShape.points.map(v => new Vector(v.x+20 , v.y+10 ))
+            copy.zIndex = shapes.length 
+
+            if (!copyOrCutHistory.length) copyOrCutHistory.push(copy)           
+            deselectAll()
+          
+    }    
+    if (event.ctrlKey && event.key === 'v' && copyOrCutHistory.length) {
+        
+        shapes = [...shapes, ...copyOrCutHistory]
+        copyOrCutHistory.length = 0
     }
     drawProperShapes(shapes)
   });

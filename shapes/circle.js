@@ -4,6 +4,7 @@ class Circle extends Shape {
         this.corner1 =  corner1
         this.corner2 = corner1   
         this.type ='circle'
+        this.points = [this.corner1, this.corner2]
     }
     static load(data) {
        

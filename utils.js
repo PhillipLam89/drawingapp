@@ -107,8 +107,11 @@ function updateProperties(selectedShape) {
 }
 
 function changeWidth(value) {
+
+
  const shape = shapes.find(s => s.selected)
  shape.setWidth(Number(value))
+ 
  drawProperShapes(shapes)
 }
 
