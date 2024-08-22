@@ -270,8 +270,11 @@ function handleSwapBtnCreation(selectedShape) {
       }
 }
 function undo() {
-    history = [...history, shapes.pop()]
-    drawProperShapes(shapes)
+    if (shapes.length) {
+        history = [...history, shapes.pop()]
+        drawProperShapes(shapes)
+    }
+
 }
 
 function redo() {
