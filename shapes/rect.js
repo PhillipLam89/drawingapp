@@ -4,6 +4,7 @@ class Rect extends Shape {
         this.corner1 = corner1
         this.corner2 = corner1
         this.type = type
+        this.points = this.getPoints()
     }
     static load(data) {
        

@@ -4,6 +4,7 @@ class Triangle extends Shape {
         this.corner1 =  corner1
         this.corner2 = {}
         this.type = type
+        this.points = [this.corner1,this.corner2]
     }
     static load(data) {
        

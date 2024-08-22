@@ -2,6 +2,7 @@ class Path extends Shape {
     constructor(startPoint, options) {
         super(options) //can be put on parent class since all shapes use options from color picker
         this.points = new Array(startPoint)
+        this.type = 'path'
     }
     static load(data) {
         const path = new Path()
@@ -46,6 +47,7 @@ class Path extends Shape {
         }
         this.size.width = width
      }
+
      setHeight(height) {
         const size = getSize(this.points)
         const ratio = height / size.height
