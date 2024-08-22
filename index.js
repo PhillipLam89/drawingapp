@@ -35,7 +35,8 @@ changeCanvas.oninput = function changeCanvasBG() {
 let copyOrCutHistory = []
 
 document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && event.key === 'z') {
+    if (event.ctrlKey && event.key === 'z' && shapes.length) {
+       
        history = [...history, shapes.pop()]
               
     }
@@ -51,7 +52,7 @@ document.addEventListener('keydown', function(event) {
             const types = {path: Path, square:Rect, rect: Rect, circle: Circle, equilateralTriangle: Triangle, rightTriangle: Triangle}
 
 
-            console.log(selectedShape.type)
+            
             const copy = new types[selectedShape.type]()
             const keys = Object.keys(selectedShape)
             const values = Object.values({...selectedShape})
@@ -63,8 +64,10 @@ document.addEventListener('keydown', function(event) {
             copy.idArr = generateID()
             copy.id = copy.idArr.join('')
             copy.options =  {...selectedShape.options}
-            copy.points = selectedShape.points.map(v => new Vector(v.x+20 , v.y+10 ))
+            copy.points = selectedShape.points.map(v => new Vector(v.x+11 , v.y+11 ))
             copy.zIndex = shapes.length 
+
+          
 
             if (!copyOrCutHistory.length) copyOrCutHistory.push(copy)           
             deselectAll()
