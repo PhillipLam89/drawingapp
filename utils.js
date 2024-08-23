@@ -275,5 +275,5 @@ function notifyCopyOrCut(operation) {
     h2.style.top = '5vw'
     h2.id = 'notifyCopyCutH2'
     document.body.appendChild(h2)
-    console.log('RAN')
+  
 }
