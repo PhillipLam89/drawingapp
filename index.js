@@ -97,7 +97,10 @@ document.addEventListener('keydown', function(event) {
        
         notifyCopyOrCut('pasted')
         drawProperShapes(shapes, true)
-        setTimeout(() => notifyCopyCutH2 && notifyCopyCutH2.remove(),1500)
+        setTimeout(() => {
+            if (!document.getElementById('notifyCopyCutH2')) return //using doc.getElementId prevents console error
+            notifyCopyCutH2.remove()
+        },1500)
         return
     }
 
