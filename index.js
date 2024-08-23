@@ -68,16 +68,25 @@ document.addEventListener('keydown', function(event) {
             copy.zIndex = shapes.length 
 
           
-
             if (!copyOrCutHistory.length) copyOrCutHistory.push(copy)           
             deselectAll()
           
-    }    
+    }   
+    if (event.ctrlKey && event.key === 'x') {
+        console.log('ran')
+        const selectedShape = shapes.find(s => s.selected)
+        if (!selectedShape) return
+        const originalIndex = selectedShape.zIndex
+        const copy = shapes.splice(originalIndex,1)[0]
+        copyOrCutHistory[0] = copy
+        
+    } 
     if (event.ctrlKey && event.key === 'v' && copyOrCutHistory.length) {
         
-        shapes = [...shapes, ...copyOrCutHistory]
+        shapes = [...shapes, ...copyOrCutHistory]      
         copyOrCutHistory.length = 0
     }
+
     drawProperShapes(shapes)
   });
 
