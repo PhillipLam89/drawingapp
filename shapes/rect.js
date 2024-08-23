@@ -83,7 +83,7 @@ class Rect extends Shape {
         ctx.rect(left,top,width,height)
         super.applyHitRegionStyles(ctx) 
     }
-    draw(ctx) {
+    draw(ctx, isCopied) {
         ctx.beginPath()
         const center=this.center
 
@@ -101,6 +101,7 @@ class Rect extends Shape {
             height = this.type === 'square' ? width : (Math.abs(this.corner1.y - this.corner2.y))
             left = minX + center.x
         }
+        
         ctx.rect(left,top,width,height)
         const collisionObj = {
             x: left,

@@ -18,10 +18,10 @@ function clearAndRedrawCanvas() {
     //             stageProperties.height)
         
 }
-function drawProperShapes(shapes) {
+function drawProperShapes(shapes, isCopied = false) {
     clearAndRedrawCanvas(changeCanvasInput.value)
     for (const shape of shapes) { 
-        shape.draw(ctx)
+        shape.draw(ctx, isCopied)
     }
     helperCtx.clearRect(0,0, canvasProperties.width, canvasProperties.height)
     for (const shape of shapes) { 
@@ -263,5 +263,17 @@ function redo() {
         shapes = [...shapes, history.pop()]
         drawProperShapes(shapes)
     }
+}
 
+function notifyCopyOrCut(operation) {
+   
+    const h2 = document.createElement('h2')
+    h2.textContent = operation.toUpperCase() +'!'
+    h2.style.position = 'absolute'
+ 
+    h2.style.left = '50vw'
+    h2.style.top = '5vw'
+    h2.id = 'notifyCopyCutH2'
+    document.body.appendChild(h2)
+    console.log('RAN')
 }
