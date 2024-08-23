@@ -196,7 +196,6 @@ function checkCollision(rect1, rect2) {
 
 function createBtn(shapeObj, side, obj) {
     
-  
     if (document.getElementById('zIndexBtn')) zIndexBtn.remove()
 
     const btn = document.createElement('button')
@@ -207,24 +206,6 @@ function createBtn(shapeObj, side, obj) {
     btn.style.top = shapeObj.center.y  + shapeObj.size.height / 2 + 'px'
     btn.onclick = (e) => zIndexSwap(e,obj)
     document.body.appendChild(btn)
-    
-    // const deleteBtn = document.createElement('button')
-    // deleteBtn.textContent = `Delete`
-    // deleteBtn.style.position = 'absolute'
-    // deleteBtn.id = 'deleteBtn'
-
-    // const style = window.getComputedStyle(document.getElementById('zIndexBtn'))
-    // let btnWidth= style.getPropertyValue('width')
-
-    // btnWidth = ~~btnWidth.slice(0, btnWidth.indexOf('p'))
-    // console.log(btnWidth)
-    // deleteBtn.style.left = shapeObj.center.x - shapeObj.size.width / 2 + btnWidth * 1.2 + 'px'
-    // deleteBtn.style.top = shapeObj.center.y  - shapeObj.size.height / 2 + btnWidth * 2 + 'px'
-    // deleteBtn.onclick = (e) => zIndexSwap(e,obj)
-
-
-
-    // document.body.appendChild(deleteBtn)
   
 }
 
