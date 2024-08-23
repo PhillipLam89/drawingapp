@@ -66,6 +66,9 @@ document.addEventListener('keydown', function(event) {
             copy.options =  {...selectedShape.options}
             copy.points = selectedShape.points.map(v => new Vector(v.x+11 , v.y+11 ))
             copy.zIndex = shapes.length 
+            copy.size = {...selectedShape.size}
+            copy.corner1 = {...selectedShape.corner1}
+            copy.corner2 = {...selectedShape.corner2}
 
           
             if (!copyHistory.length) copyHistory.push(copy)           
