@@ -26,3 +26,12 @@ body {
     top: 2vw;
     right:3vw;
 }
+@keyframes fadeOut {
+    0%    { opacity: 0; }
+    100%   { opacity: 1; }
+
+  }
+#notifyCopyCutH2 {
+    color: white;
+    animation: fadeOut 1.5s linear;
+}

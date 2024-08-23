@@ -32,9 +32,10 @@ changeCanvas.oninput = function changeCanvasBG() {
  drawProperShapes(shapes)
 }
 
-let copyOrCutHistory = []
+let copyHistory = []
 
 document.addEventListener('keydown', function(event) {
+   
     if (event.ctrlKey && event.key === 'z' && shapes.length) {
        
        history = [...history, shapes.pop()]
@@ -48,11 +49,10 @@ document.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === 'c')  {
             const selectedShape = shapes.find(s => s.selected)
             if (!selectedShape) return
-
+            notifyCopyOrCut('copied')
+            setTimeout(() => notifyCopyCutH2.remove(),1500)
             const types = {path: Path, square:Rect, rect: Rect, circle: Circle, equilateralTriangle: Triangle, rightTriangle: Triangle}
 
-
-            
             const copy = new types[selectedShape.type]()
             const keys = Object.keys(selectedShape)
             const values = Object.values({...selectedShape})
@@ -68,23 +68,26 @@ document.addEventListener('keydown', function(event) {
             copy.zIndex = shapes.length 
 
           
-            if (!copyOrCutHistory.length) copyOrCutHistory.push(copy)           
+            if (!copyHistory.length) copyHistory.push(copy)           
             deselectAll()
           
     }   
-    if (event.ctrlKey && event.key === 'x') {
-        console.log('ran')
-        const selectedShape = shapes.find(s => s.selected)
-        if (!selectedShape) return
-        const originalIndex = selectedShape.zIndex
-        const copy = shapes.splice(originalIndex,1)[0]
-        copyOrCutHistory[0] = copy
+    // if (event.ctrlKey && event.key === 'x') {
+    //     const selectedShape = shapes.find(s => s.selected)
+    //     if (!selectedShape) return
+    //     notifyCopyOrCut('cut')
+    //     setTimeout(() => notifyCopyCutH2.remove(),1500)
+    //     const originalIndex = selectedShape.zIndex
+    //     const copy = shapes.splice(originalIndex,1)[0]
+    //     cutHistory.push(copy)
         
-    } 
-    if (event.ctrlKey && event.key === 'v' && copyOrCutHistory.length) {
+    // } 
+    if (event.ctrlKey && event.key === 'v' && copyHistory.length) {
         
-        shapes = [...shapes, ...copyOrCutHistory]      
-        copyOrCutHistory.length = 0
+        shapes = [...shapes, ...copyHistory]      
+        copyHistory.length = 0
+        drawProperShapes(shapes, true)
+        return
     }
 
     drawProperShapes(shapes)
