@@ -71,25 +71,33 @@ document.addEventListener('keydown', function(event) {
             copy.corner2 = {...selectedShape.corner2}
 
           
-            if (!copyHistory.length) copyHistory.push(copy)           
+            copyHistory = [copy]         
             deselectAll()
           
     }   
-    // if (event.ctrlKey && event.key === 'x') {
-    //     const selectedShape = shapes.find(s => s.selected)
-    //     if (!selectedShape) return
-    //     notifyCopyOrCut('cut')
-    //     setTimeout(() => notifyCopyCutH2.remove(),1500)
-    //     const originalIndex = selectedShape.zIndex
-    //     const copy = shapes.splice(originalIndex,1)[0]
-    //     cutHistory.push(copy)
+    if (event.ctrlKey && event.key === 'x') {
+        const selectedShape = shapes.find(s => s.selected)
+        if (!selectedShape) return
+        notifyCopyOrCut('cut')
+        setTimeout(() => notifyCopyCutH2.remove(),1500)
+        const originalIndex = selectedShape.zIndex
+        const copy = shapes.splice(originalIndex,1)[0]
+        copyHistory = [copy] 
+        deselectAll()
         
-    // } 
+    } 
     if (event.ctrlKey && event.key === 'v' && copyHistory.length) {
         
         shapes = [...shapes, ...copyHistory]      
+        shapes = shapes.sort((a,b) => a.zIndex - b.zIndex)
         copyHistory.length = 0
+        if (document.getElementById('notifyCopyCutH2')) {
+            notifyCopyCutH2.remove()
+        }
+       
+        notifyCopyOrCut('pasted')
         drawProperShapes(shapes, true)
+        setTimeout(() => notifyCopyCutH2 && notifyCopyCutH2.remove(),1500)
         return
     }
 
